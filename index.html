@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIP TOOLS DASHBOARD by.bangdit</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #e0e0e0;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+        .container {
+            background-color: #121212;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #00e676;
+            margin-top: 0;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h3 {
+            color: #29b6f6;
+            font-size: 1rem;
+            margin: 20px 0 10px 0;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        select {
+            background-color: #1e1e1e;
+            color: #fff;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            width: 100%;
+            font-family: inherit;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+        }
+        textarea {
+            width: 100%;
+            background-color: #080808;
+            color: #00ff00;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            font-family: 'Consolas', monospace;
+            white-space: pre; /* PENTING: Biar baris baru kebaca */
+            overflow-x: auto;
+        }
+        
+        .ua-box { height: 80px; }
+        .script-box { height: 250px; color: #ccc; border: 1px solid #555; }
+
+        .btn {
+            background-color: #00e676;
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .btn:active { transform: translateY(0); }
+
+        .btn-blue { background-color: #29b6f6; }
+        .btn-orange { background-color: #ff9800; color: #fff; }
+        .btn-red { background-color: #d32f2f; color: #fff; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            font-size: 0.8rem;
+            color: #666;
+            height: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 6px;
+            background: #222;
+            color: #ccc;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            margin-bottom: 5px;
+            border: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>VIP TOOLS BARUDAK TASIK</h2>
+    <div style="font-size: 10px; color: #666; margin-bottom: 20px;">DASHBOARD BY.BANGDIT</div>
+    
+    <!-- MODULE 1: UA GENERATOR -->
+    <h3>1. UA DEVICE GENERATOR</h3>
+    <select id="modeSelect">
+        <option value="arab">🚀 HP: Android 16 (Arab - Asiacell)</option>
+        <option value="iphone">🍎 HP: iPhone iOS 18 (Fresh)</option>
+        <option value="linux">💻 PC: Linux aarch64 (Anti-Detect)</option>
+        <option value="windows">💻 PC: Windows 10 Chrome (Standard)</option>
+    </select>
+
+    <textarea id="resultArea" class="ua-box" readonly placeholder="User Agent..."></textarea>
+    
+    <div class="grid-2">
+        <button class="btn" onclick="generateUA()">⚡ SPIN</button>
+        <button class="btn btn-blue" onclick="copyUA()">📋 COPY</button>
+    </div>
+    <div class="status" id="statusMsg">Ready.</div>
+
+    <!-- MODULE 2: SCRIPT STORE -->
+    <h3>2. SCRIPT AUTO FILL (V31 STABLE)</h3>
+    <div style="text-align: left; margin-bottom: 5px;">
+        <span class="badge" id="activeBadge">Pilih Versi:</span>
+    </div>
+    
+    <div class="grid-2">
+        <button class="btn btn-blue" onclick="loadScript('v31')">🌍 V31 (BULE)</button>
+        <button class="btn btn-red" onclick="loadScript('v31_indo')">🇮🇩 V31.2 (INDO)</button>
+    </div>
+
+    <textarea id="scriptBox" class="script-box" readonly placeholder="Klik tombol di atas untuk memuat script..."></textarea>
+    
+    <button class="btn btn-orange" onclick="copyScript()">📥 SALIN SCRIPT</button>
+    <div class="status" id="scriptStatus"></div>
+
+</div>
+
+<script>
+// --- DATABASE SCRIPT YANG SUDAH DIRAPIKAN (PENTING: JANGAN DIUBAH SPASINYA) ---
+
+const scriptV31 = `// ==UserScript==
+// @name         FB AUTO FILL V31 (BULE STABLE) - by.bangdit
+// @namespace    https://viayoo.com/fb-v31-final
+// @version      31.0
+// @description  [BULE] Auto Fill Nama, Tahun Lahir, Auto Fill password, Salin UID
+// @author       by.bangdit
+// @match        *://*/*
+// @run-at       document-end
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  'use strict';
+
+  const CONFIG = {
+      pass: "tasik321",
+      targetYear: "1999",
+      targetMonth: "5",
+      targetDay: "15"
+  };
+
+  const isFB = window.location.hostname.includes('facebook.com') || window.location.hostname.includes('fb.com');
+
+  const firstNames = ["Emily","Olivia","Sophia","Ava","Isabella","Mia","Abigail","Evelyn","Charlotte","Harper","Amelia","Elizabeth","Sofia","Ella","Madison","Scarlett","Victoria","Aria","Grace","Chloe","Camila","Penelope","Riley","Layla","Lillian","Nora","Zoey","Mila","Aubrey","Hannah","Lily","Addison","Eleanor","Natalie","Luna","Savannah","Brooklyn","Leah","Zoe","Stella","Hazel","Ellie","Paisley","Audrey","Skylar","Violet","Claire","Bella","Aurora","Lucy","Anna","Samantha"];
+  const lastNames = ["Smith","Johnson","Williams","Brown","Jones","Miller","Davis","Garcia","Rodriguez","Wilson","Martinez","Anderson","Taylor","Thomas","Hernandez","Moore","Martin","Jackson","Thompson","White","Lopez","Lee","Gonzalez","Harris","Clark","Lewis","Robinson","Walker","Perez","Hall","Young","Allen","Sanchez","Wright","King","Scott","Green","Baker","Adams","Nelson","Hill","Ramirez","Campbell","Mitchell","Roberts","Carter"];
+  
+  const myF = firstNames[Math.floor(Math.random() * firstNames.length)];
+  const myL = lastNames[Math.floor(Math.random() * lastNames.length)];
+
+  const REGEX = {
+      firstName: /first|depan|prénom|prenom|given|nombre|vorname/i,
+      lastName: /last|belakang|surname|family|famille|apellido|nachname/i, 
+      password: /pass|sandi|secret|mot de passe|contraseña|kennwort/i,
+      genderFemale: /^(female|wanita|perempuan|cewe|femme|mujer|frau|kvinna|donna)$/i,
+      day: /day|tgl|hari|jour|dia|tag/i, month: /month|bln|bulan|mois|mes|monat/i, year: /year|thn|tahun|année|an|año|jahr/i
+  };
+
+  function setNativeValue(el, value) {
+    if (!el) return;
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+    if (setter) setter.call(el, value); else el.value = value;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+    el.dispatchEvent(new Event('blur', { bubbles: true }));
+  }
+
+  function forceCopy(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed"; textArea.style.left = "-9999px"; textArea.style.top = "0";
+      document.body.appendChild(textArea);
+      textArea.focus(); textArea.select(); textArea.setSelectionRange(0, 99999);
+      let successful = false;
+      try { successful = document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(textArea);
+      return successful;
+  }
+
+  function showPermanentBtn(uid) {
+      if(document.getElementById('uid-permanent-btn')) return;
+      const btn = document.createElement('div');
+      btn.id = 'uid-permanent-btn';
+      btn.style.cssText = 'position:fixed;top:45px;left:50%;transform:translateX(-50%);z-index:9999999;background:#fff;border:2px solid #d32f2f;color:#d32f2f;padding:6px 15px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.2);text-align:center;font-family:sans-serif;cursor:pointer;min-width:180px;';
+      btn.innerHTML = '<div style="font-size:9px; font-weight:bold; margin-bottom:1px;">KLIK UNTUK SALIN UID</div><div style="font-size:15px; font-weight:bold; letter-spacing:1px; color:#000;">'+uid+'</div>';
+      btn.onclick = () => {
+          forceCopy(uid);
+          btn.style.borderColor = "#198754"; btn.style.background = "#198754"; btn.style.color = "#fff";
+          btn.innerHTML = '<div style="font-size:13px; font-weight:bold; padding:2px;">✅ TERSALIN!</div>';
+          setTimeout(() => btn.remove(), 1000);
+      };
+      document.body.appendChild(btn);
+  }
+
+  function checkUID() {
+      const match = document.cookie.match(/c_user=([0-9]+)/);
+      if (match && match[1]) { showPermanentBtn(match[1]); }
+  }
+
+  function initBadge() {
+      if(!isFB) return;
+      if(document.getElementById('fb-badge-uid')) return;
+      const b = document.createElement('div');
+      b.id = 'fb-badge-uid';
+      b.innerHTML = '<div style="display:flex;align-items:center;gap:5px;"><span style="font-size:12px;">🇮🇩</span><span style="font-weight:bold;font-size:10px;">Bangdit</span></div>';
+      b.style.cssText = "position:fixed;top:10px;right:10px;z-index:9999999;background:#198754;color:#fff;border:1px solid #fff;padding:4px 10px;border-radius:4px;font-family:sans-serif;pointer-events:none;user-select:none;";
+      document.body.appendChild(b);
+  }
+
+  function runLogic() {
+    if(!isFB) return;
+    
+    const inputs = document.querySelectorAll('input:not([type="hidden"])');
+    inputs.forEach(el => {
+        if(el.value && el.value.length > 0 && el.type !== 'date') return;
+        const attr = ((el.name||'') + '|' + (el.placeholder||'') + '|' + (el.getAttribute('aria-label')||'') + '|' + (el.id||'')).toLowerCase();
+        
+        if (REGEX.firstName.test(attr)) setNativeValue(el, myF);
+        else if (REGEX.lastName.test(attr)) setNativeValue(el, myL);
+        else if (REGEX.password.test(attr) || el.type === 'password') setNativeValue(el, CONFIG.pass);
+        else if (el.type === 'date') setNativeValue(el, CONFIG.targetYear + "-05-15");
+    });
+
+    const selects = document.querySelectorAll('select');
+    selects.forEach(sel => {
+        const attr = ((sel.name||'') + '|' + (sel.id||'') + '|' + (sel.getAttribute('aria-label')||'')).toLowerCase();
+        if (REGEX.year.test(attr)) {
+            let f = false;
+            for (let i=0; i<sel.options.length; i++) if(sel.options[i].text.includes(CONFIG.targetYear)){ if(sel.selectedIndex!==i){sel.selectedIndex=i;sel.dispatchEvent(new Event('change',{bubbles:true}));} f=true;break;}
+            if(!f && sel.value!==CONFIG.targetYear){sel.value=CONFIG.targetYear;sel.dispatchEvent(new Event('change',{bubbles:true}));}
+        }
+        else if (REGEX.month.test(attr)) { if(sel.value !== CONFIG.targetMonth) { sel.value=CONFIG.targetMonth; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
+        else if (REGEX.day.test(attr)) { if(sel.value !== CONFIG.targetDay) { sel.value=CONFIG.targetDay; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
+    });
+
+    if (!document.querySelector('input[type="radio"]:checked')) {
+        const candidates = document.querySelectorAll('label, span, div, td');
+        for (const el of candidates) { const t=el.innerText.trim(); if(t && REGEX.genderFemale.test(t)){el.click();return;} }
+        const r = document.querySelector('input[value="1"]'); if(r) r.click();
+    }
+  }
+
+  if(isFB) {
+      initBadge();
+      const observer = new MutationObserver((muts) => {
+          let change = false;
+          for(let m of muts) if(m.addedNodes.length) change=true;
+          if(change) runLogic();
+      });
+      observer.observe(document.documentElement, {childList:true, subtree:true});
+      setInterval(() => { runLogic(); checkUID(); initBadge(); }, 1000);
+      runLogic();
+  }
+
+})();`;
+
+const scriptV31_Indo = `// ==UserScript==
+// @name         FB AUTO FILL V31.2 (INDO LOCAL) - by.bangdit
+// @namespace    https://viayoo.com/fb-v31-2-indo
+// @version      31.2
+// @description  [INDO] Auto Fill Nama, Tahun Lahir, Auto Fill password, Salin UID
+// @author       by.bangdit
+// @match        *://*/*
+// @run-at       document-end
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  'use strict';
+
+  const CONFIG = {
+      pass: "tasik321",
+      targetYear: "1999",
+      targetMonth: "5",
+      targetDay: "15"
+  };
+
+  const isFB = window.location.hostname.includes('facebook.com') || window.location.hostname.includes('fb.com');
+
+  const firstNames = ["Ayu","Putri","Siti","Dewi","Rina","Anisa","Nadia","Sarah","Lia","Maya","Indah","Fitri","Tia","Vina","Dinda","Cinta","Aulia","Bella","Citra","Dian","Eka","Fanny","Gita","Hana","Intan","Julia","Kartika","Laras","Mega","Nina","Olivia","Priscillia","Qori","Ratna","Shinta","Tari","Ulfa","Vera","Wulan","Xena","Yulia","Zahra","Adelia","Bunga","Cantika","Amanda","Jessica","Michelle","Vanessa","Tiara","Raisa","Chelsea"];
+  const lastNames = ["Lestari","Wijaya","Putri","Santoso","Pratama","Kusuma","Sari","Hidayah","Ramadhani","Utami","Susanti","Pertiwi","Anggraini","Wulandari","Saputri","Rahmawati","Kurnia","Setiawan","Siregar","Nasution","Simanjuntak","Panggabean","Manullang","Sihombing","Hutapea","Mahendra","Winata","Aditama","Nugraha","Budiman","Hartono","Lim","Tan","Iskandar","Fauziah","Azzahra","Permata","Salsabila","Wardani","Yuliana","Zulkarnain","Handayani"];
+  
+  const myF = firstNames[Math.floor(Math.random() * firstNames.length)];
+  const myL = lastNames[Math.floor(Math.random() * lastNames.length)];
+
+  const REGEX = {
+      firstName: /first|depan|prénom|prenom|given|nombre|vorname/i,
+      lastName: /last|belakang|surname|family|famille|apellido|nachname/i, 
+      password: /pass|sandi|secret|mot de passe|contraseña|kennwort/i,
+      genderFemale: /^(female|wanita|perempuan|cewe|femme|mujer|frau|kvinna|donna)$/i,
+      day: /day|tgl|hari|jour|dia|tag/i, month: /month|bln|bulan|mois|mes|monat/i, year: /year|thn|tahun|année|an|año|jahr/i
+  };
+
+  function setNativeValue(el, value) {
+    if (!el) return;
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+    if (setter) setter.call(el, value); else el.value = value;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+    el.dispatchEvent(new Event('blur', { bubbles: true }));
+  }
+
+  function forceCopy(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed"; textArea.style.left = "-9999px"; textArea.style.top = "0";
+      document.body.appendChild(textArea);
+      textArea.focus(); textArea.select(); textArea.setSelectionRange(0, 99999);
+      let successful = false;
+      try { successful = document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(textArea);
+      return successful;
+  }
+
+  function showPermanentBtn(uid) {
+      if(document.getElementById('uid-permanent-btn')) return;
+      const btn = document.createElement('div');
+      btn.id = 'uid-permanent-btn';
+      btn.style.cssText = 'position:fixed;top:45px;left:50%;transform:translateX(-50%);z-index:9999999;background:#fff;border:2px solid #d32f2f;color:#d32f2f;padding:6px 15px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.2);text-align:center;font-family:sans-serif;cursor:pointer;min-width:180px;';
+      btn.innerHTML = '<div style="font-size:9px; font-weight:bold; margin-bottom:1px;">KLIK UNTUK SALIN UID</div><div style="font-size:15px; font-weight:bold; letter-spacing:1px; color:#000;">'+uid+'</div>';
+      btn.onclick = () => {
+          forceCopy(uid);
+          btn.style.borderColor = "#198754"; btn.style.background = "#198754"; btn.style.color = "#fff";
+          btn.innerHTML = '<div style="font-size:13px; font-weight:bold; padding:2px;">✅ TERSALIN!</div>';
+          setTimeout(() => btn.remove(), 1000);
+      };
+      document.body.appendChild(btn);
+  }
+
+  function checkUID() {
+      const match = document.cookie.match(/c_user=([0-9]+)/);
+      if (match && match[1]) { showPermanentBtn(match[1]); }
+  }
+
+  function initBadge() {
+      if(!isFB) return;
+      if(document.getElementById('fb-badge-uid')) return;
+      const b = document.createElement('div');
+      b.id = 'fb-badge-uid';
+      b.innerHTML = '<div style="display:flex;align-items:center;gap:5px;"><span style="font-size:12px;">🇮🇩</span><span style="font-weight:bold;font-size:10px;">Bangdit (INDO)</span></div>';
+      b.style.cssText = "position:fixed;top:10px;right:10px;z-index:9999999;background:#198754;color:#fff;border:1px solid #fff;padding:4px 10px;border-radius:4px;font-family:sans-serif;pointer-events:none;user-select:none;";
+      document.body.appendChild(b);
+  }
+
+  function runLogic() {
+    if(!isFB) return;
+    
+    const inputs = document.querySelectorAll('input:not([type="hidden"])');
+    inputs.forEach(el => {
+        if(el.value && el.value.length > 0 && el.type !== 'date') return;
+        const attr = ((el.name||'') + '|' + (el.placeholder||'') + '|' + (el.getAttribute('aria-label')||'') + '|' + (el.id||'')).toLowerCase();
+        
+        if (REGEX.firstName.test(attr)) setNativeValue(el, myF);
+        else if (REGEX.lastName.test(attr)) setNativeValue(el, myL);
+        else if (REGEX.password.test(attr) || el.type === 'password') setNativeValue(el, CONFIG.pass);
+        else if (el.type === 'date') setNativeValue(el, CONFIG.targetYear + "-05-15");
+    });
+
+    const selects = document.querySelectorAll('select');
+    selects.forEach(sel => {
+        const attr = ((sel.name||'') + '|' + (sel.id||'') + '|' + (sel.getAttribute('aria-label')||'')).toLowerCase();
+        if (REGEX.year.test(attr)) {
+            let f = false;
+            for (let i=0; i<sel.options.length; i++) if(sel.options[i].text.includes(CONFIG.targetYear)){ if(sel.selectedIndex!==i){sel.selectedIndex=i;sel.dispatchEvent(new Event('change',{bubbles:true}));} f=true;break;}
+            if(!f && sel.value!==CONFIG.targetYear){sel.value=CONFIG.targetYear;sel.dispatchEvent(new Event('change',{bubbles:true}));}
+        }
+        else if (REGEX.month.test(attr)) { if(sel.value !== CONFIG.targetMonth) { sel.value=CONFIG.targetMonth; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
+        else if (REGEX.day.test(attr)) { if(sel.value !== CONFIG.targetDay) { sel.value=CONFIG.targetDay; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
+    });
+
+    if (!document.querySelector('input[type="radio"]:checked')) {
+        const candidates = document.querySelectorAll('label, span, div, td');
+        for (const el of candidates) { const t=el.innerText.trim(); if(t && REGEX.genderFemale.test(t)){el.click();return;} }
+        const r = document.querySelector('input[value="1"]'); if(r) r.click();
+    }
+  }
+
+  if(isFB) {
+      initBadge();
+      const observer = new MutationObserver((muts) => {
+          let change = false;
+          for(let m of muts) if(m.addedNodes.length) change=true;
+          if(change) runLogic();
+      });
+      observer.observe(document.documentElement, {childList:true, subtree:true});
+      setInterval(
