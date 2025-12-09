@@ -469,7 +469,7 @@ const scriptV31_Indo = `// ==UserScript==
             const day = String(randomInt(1, 28)).padStart(2, '0');
             const month = String(randomInt(8, 12)).padStart(2, '0'); 
             const buildId = `BP2A.25${month}${day}.0${randomInt(10, 99)}.C${randomInt(1, 5)}`;
-            ua = `Dalvik/2.1.0 (Linux; U; Android 16; SM-S918B Build/${buildId}) [FBAN/Orca-Android;FBAV/532.0.0.${randomInt(50,70)}.120;FBPN/com.facebook.orca;FBLC/ar_AE;FBBV/818234${randomInt(700,999)};FBCR/Asiacell;FBMF/samsung;FBBD/samsung;FBDV/SM-S918B;FBSV/16;FBCA/arm64-v8a:null;FBDM/{density=2.8125,width=1080,height=2106};FB_FW/1;]`;
+            ua = `Dalvik/2.1.0 (Linux; U; Android 16; SM-S918B Build/${buildId}) [FBAN/Orca-Android;FBAV/532.0.0.${randomInt(50,70)}.120;FBPN/com.facebook.orca;FBLC/system;FBBV/818234${randomInt(700,999)};FBCR/Asiacell;FBMF/samsung;FBBD/samsung;FBDV/SM-S918B;FBSV/16;FBCA/arm64-v8a:null;FBDM/{density=2.8125,width=1080,height=2106};FB_FW/1;]`;
         } else if (mode === "iphone") {
             ua = `Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.${randomInt(1,3)}.${randomInt(1,9)} Mobile/22F${randomInt(50,80)} Safari/605.1.15`;
         } else if (mode === "linux") {
