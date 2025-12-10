@@ -22,7 +22,7 @@
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(0, 230, 118, 0.1);
             width: 90%;
-            max-width: 600px;
+            max-width: 650px;
             text-align: center;
             border: 1px solid #333;
             margin-bottom: 20px;
@@ -37,12 +37,23 @@
         h3 {
             color: #29b6f6;
             font-size: 1rem;
-            margin: 20px 0 10px 0;
+            margin: 25px 0 15px 0;
             text-align: left;
             border-bottom: 1px solid #333;
             padding-bottom: 5px;
         }
-        select {
+        
+        /* Form Elements */
+        label {
+            display: block;
+            text-align: left;
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+        
+        input[type="text"], input[type="number"], select {
             background-color: #1e1e1e;
             color: #fff;
             padding: 12px;
@@ -51,10 +62,15 @@
             width: 100%;
             font-family: inherit;
             margin-bottom: 10px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             outline: none;
-            cursor: pointer;
+            box-sizing: border-box;
         }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #00e676;
+        }
+
         textarea {
             width: 100%;
             background-color: #080808;
@@ -67,13 +83,14 @@
             box-sizing: border-box;
             margin-bottom: 10px;
             font-family: 'Consolas', monospace;
-            white-space: pre; /* PENTING: Biar baris baru kebaca */
+            white-space: pre;
             overflow-x: auto;
         }
         
         .ua-box { height: 80px; }
-        .script-box { height: 250px; color: #ccc; border: 1px solid #555; }
+        .script-box { height: 250px; color: #aaffaa; border: 1px solid #555; }
 
+        /* Buttons */
         .btn {
             background-color: #00e676;
             color: #000;
@@ -89,36 +106,45 @@
             margin-bottom: 8px;
         }
         .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        .btn:active { transform: translateY(0); }
-
         .btn-blue { background-color: #29b6f6; }
         .btn-orange { background-color: #ff9800; color: #fff; }
-        .btn-red { background-color: #d32f2f; color: #fff; }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .status {
-            font-size: 0.8rem;
-            color: #666;
-            height: 20px;
-            margin-bottom: 10px;
-        }
         
-        .badge {
-            display: inline-block;
-            padding: 3px 6px;
-            background: #222;
-            color: #ccc;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            margin-bottom: 5px;
-            border: 1px solid #444;
+        /* Utility Classes */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 5px; }
+        
+        .status { font-size: 0.8rem; color: #666; height: 20px; margin-bottom: 10px; }
+        .hidden { display: none; }
+
+        /* Generator Specific Styles */
+        .custom-area {
+            background: #1a1a1a;
+            padding: 15px;
+            border: 1px dashed #444;
+            border-radius: 6px;
+            margin-top: 10px;
+            margin-bottom: 15px;
         }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            background: #111;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .radio-label {
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #ccc;
+        }
+        .btn-mini {
+            background: #333; color: #fff; font-size: 0.7rem; padding: 4px 8px; border: 1px solid #444; border-radius: 3px; cursor: pointer; float: right; margin-top: -20px;
+        }
+        .btn-mini:hover { background: #555; border-color: #00e676; }
     </style>
 </head>
 <body>
@@ -139,328 +165,86 @@
     <textarea id="resultArea" class="ua-box" readonly placeholder="User Agent..."></textarea>
     
     <div class="grid-2">
-        <button class="btn" onclick="generateUA()">⚡ SPIN</button>
+        <button class="btn" onclick="generateUA()">⚡ SPIN UA</button>
         <button class="btn btn-blue" onclick="copyUA()">📋 COPY</button>
     </div>
     <div class="status" id="statusMsg">Ready.</div>
 
-    <!-- MODULE 2: SCRIPT STORE -->
-    <h3>2. SCRIPT AUTO FILL (V31 STABLE)</h3>
-    <div style="text-align: left; margin-bottom: 5px;">
-        <span class="badge" id="activeBadge">Pilih Versi:</span>
-    </div>
+    <!-- MODULE 2: SCRIPT GENERATOR V36 -->
+    <h3>2. SCRIPT GENERATOR V36 (LITE)</h3>
     
+    <!-- Config Dasar -->
     <div class="grid-2">
-        <button class="btn btn-blue" onclick="loadScript('v31')">🌍 V31 (BULE)</button>
-        <button class="btn btn-red" onclick="loadScript('v31_indo')">🇮🇩 V31.2 (INDO)</button>
+        <div>
+            <label>Nama Script</label>
+            <input type="text" id="sName" value="FB AUTO V36 LITE">
+        </div>
+        <div>
+            <label>Password (Fixed)</label>
+            <input type="text" value="tasik321" readonly style="color:#666; cursor:not-allowed;">
+        </div>
     </div>
 
-    <textarea id="scriptBox" class="script-box" readonly placeholder="Klik tombol di atas untuk memuat script..."></textarea>
+    <!-- Config Tahun Random -->
+    <div style="background:#0a0a0a; padding:10px; border-radius:5px; border:1px solid #222; margin-bottom:10px;">
+        <label style="color:#00e676; margin-bottom:8px;">RENTANG TAHUN (RANDOM)</label>
+        <div class="grid-2">
+            <div>
+                <label>Min (Terdewasa)</label>
+                <input type="number" id="minY" value="1990">
+            </div>
+            <div>
+                <label>Max (Termuda)</label>
+                <input type="number" id="maxY" value="2003">
+            </div>
+        </div>
+        <div style="font-size:9px; color:#555; text-align:left;">*Bulan & Tanggal otomatis random.</div>
+    </div>
+
+    <!-- Mode Nama -->
+    <div class="radio-group">
+        <label class="radio-label">
+            <input type="radio" name="nMode" value="auto" checked onchange="tog()"> 
+            Mode Auto (Hidden Database)
+        </label>
+        <label class="radio-label">
+            <input type="radio" name="nMode" value="custom" onchange="tog()"> 
+            Mode Custom (Edit Nama)
+        </label>
+    </div>
+
+    <div id="infoAuto" style="font-size:10px; color:#888; text-align:left; margin-bottom:15px; padding-left:5px; border-left:2px solid #00e676;">
+        Script akan otomatis diisi 80 nama cewek acak dari database internal setiap kali generate.
+    </div>
+
+    <!-- Area Custom -->
+    <div id="areaCustom" class="custom-area hidden">
+        <label>List Nama Depan</label>
+        <button class="btn-mini" onclick="fillF()">🎲 100 Random</button>
+        <textarea id="listF" style="height:80px;" placeholder="Contoh: Aulia, Putri, Siti..."></textarea>
+        
+        <label>List Nama Belakang</label>
+        <button class="btn-mini" onclick="fillL()">🎲 100 Random</button>
+        <textarea id="listL" style="height:80px;" placeholder="Contoh: Rahmawati, Lestari..."></textarea>
+    </div>
+
+    <!-- Output Script -->
+    <textarea id="output" class="script-box" placeholder="Klik tombol generate di bawah..."></textarea>
     
-    <button class="btn btn-orange" onclick="copyScript()">📥 SALIN SCRIPT</button>
-    <div class="status" id="scriptStatus"></div>
+    <div class="grid-2">
+        <button class="btn" onclick="generateV36()">⚡ GENERATE SCRIPT</button>
+        <button class="btn btn-orange" onclick="copyScript()">📥 SALIN SCRIPT</button>
+    </div>
 
 </div>
 
 <script>
-// --- DATABASE SCRIPT YANG SUDAH DIRAPIKAN (PENTING: JANGAN DIUBAH SPASINYA) ---
+    // --- DATABASE NAMA (KHUSUS CEWEK) ---
+    const DB_F = ["Aulia","Nadhira","Keisya","Nayla","Anindya","Tasya","Salma","Adelina","Maharani","Celine","Naya","Keyra","Viona","Ziva","Syifa","Nadine","Alya","Kirana","Fatin","Shanaya","Rania","Keira","Adelia","Aurelia","Nisa","Zahira","Alika","Dinda","Nayara","Karin","Lala","Felisha","Anggun","Syakila","Alesha","Shanice","Meisya","Zivana","Raysa","Clairine","Kayla","Adzkia","Nara","Amara","Alisha","Aruna","Elora","Felicia","Keysha","Syandria","Vella","Karina","Gita","Melani","Salsabila","Tania","Arsyila","Chelsea","Nathania","Andini","Fara","Diva","Salsa","Alifa","Kirani","Almira","Maura","Nayka","Levina","Selina","Alissa","Vanya","Kesha","Aveline","Dania","Shanum","Alena","Naila","Kenzie","Saira","Laras","Marsya","Adra","Aureen","Zaila","Raveena","Kezia","Ayesha","Leora","Siti","Nur","Dewi","Putri","Ayu","Rina","Sari","Sri","Wulan","Intan","Ratna","Yulia","Fitri","Indah","Rini","Eka","Dwi","Tri","Yanti","Susanti","Ika","Lilis","Nining","Titi","Yuni","Wati","Endang","Susi","Reni","Yati","Erna","Nia","Mina","Heni","Rosa","Vina","Bella","Desi","Maya","Risma","Widya","Cindy","Fani","Dian","Evi","Lina","Mila","Rara","Sifa","Tiara","Vivi","Winda","Yana","Zara"];
+    const DB_L = ["Putri","Rahmawati","Lestari","Anggraini","Safitri","Prameswari","Azzahra","Amelia","Maharani","Salma","Aurell","Puteri","Ayudya","Ayu","Amara","Meisya","Pramesti","Kamila","Wulandari","Larasati","Ayunda","Amalia","Widi","Maulida","Meilani","Rahmi","Zahrani","Alodia","Atalia","Pratiwi","Kayana","Rahmadani","Dwijaya","Aprilia","Marisa","Ardelia","Nadira","Ayudia","Dwianti","Adinda","Syakira","Paramita","Kusuma","Dewi","Utami","Wijaya","Saputri","Hassanah","Susanti","Yuliana","Hidayah","Kurnia","Astuti","Handayani","Wati","Ningsih","Nuraini","Setyawati","Wibowo","Pertiwi","Kusumawardhani","Permata","Cahyani","Hapsari","Puspita","Wardani","Melati","Saraswati","Novita","Sari","Yuliani","Rahayu","Mulyani","Setiawati","Maryani","Wahyuni","Indriani","Fauziah","Ramadhani","Khasanah","Hasanah","Farida","Nurjanah","Mardiana","Sulistri","Winarsih","Sugiarti","Hartini","Kusumawati","Damayanti","Purwanti","Wahyuningrum","Setyaningsih"];
 
-const scriptV31 = `// ==UserScript==
-// @name         FB AUTO FILL V31 (BULE STABLE) - by.bangdit
-// @namespace    https://viayoo.com/fb-v31-final
-// @version      31.0
-// @description  [BULE] Auto Fill Nama, Tahun Lahir, Auto Fill password, Salin UID
-// @author       by.bangdit
-// @match        *://*/*
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
-
-(function () {
-  'use strict';
-
-  const CONFIG = {
-      pass: "tasik321",
-      targetYear: "1999",
-      targetMonth: "5",
-      targetDay: "15"
-  };
-
-  const isFB = window.location.hostname.includes('facebook.com') || window.location.hostname.includes('fb.com');
-
-  const firstNames = ["Emily","Olivia","Sophia","Ava","Isabella","Mia","Abigail","Evelyn","Charlotte","Harper","Amelia","Elizabeth","Sofia","Ella","Madison","Scarlett","Victoria","Aria","Grace","Chloe","Camila","Penelope","Riley","Layla","Lillian","Nora","Zoey","Mila","Aubrey","Hannah","Lily","Addison","Eleanor","Natalie","Luna","Savannah","Brooklyn","Leah","Zoe","Stella","Hazel","Ellie","Paisley","Audrey","Skylar","Violet","Claire","Bella","Aurora","Lucy","Anna","Samantha"];
-  const lastNames = ["Smith","Johnson","Williams","Brown","Jones","Miller","Davis","Garcia","Rodriguez","Wilson","Martinez","Anderson","Taylor","Thomas","Hernandez","Moore","Martin","Jackson","Thompson","White","Lopez","Lee","Gonzalez","Harris","Clark","Lewis","Robinson","Walker","Perez","Hall","Young","Allen","Sanchez","Wright","King","Scott","Green","Baker","Adams","Nelson","Hill","Ramirez","Campbell","Mitchell","Roberts","Carter"];
-  
-  const myF = firstNames[Math.floor(Math.random() * firstNames.length)];
-  const myL = lastNames[Math.floor(Math.random() * lastNames.length)];
-
-  const REGEX = {
-      firstName: /first|depan|prénom|prenom|given|nombre|vorname/i,
-      lastName: /last|belakang|surname|family|famille|apellido|nachname/i, 
-      password: /pass|sandi|secret|mot de passe|contraseña|kennwort/i,
-      genderFemale: /^(female|wanita|perempuan|cewe|femme|mujer|frau|kvinna|donna)$/i,
-      day: /day|tgl|hari|jour|dia|tag/i, month: /month|bln|bulan|mois|mes|monat/i, year: /year|thn|tahun|année|an|año|jahr/i
-  };
-
-  function setNativeValue(el, value) {
-    if (!el) return;
-    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-    if (setter) setter.call(el, value); else el.value = value;
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-    el.dispatchEvent(new Event('change', { bubbles: true }));
-    el.dispatchEvent(new Event('blur', { bubbles: true }));
-  }
-
-  function forceCopy(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed"; textArea.style.left = "-9999px"; textArea.style.top = "0";
-      document.body.appendChild(textArea);
-      textArea.focus(); textArea.select(); textArea.setSelectionRange(0, 99999);
-      let successful = false;
-      try { successful = document.execCommand('copy'); } catch (err) {}
-      document.body.removeChild(textArea);
-      return successful;
-  }
-
-  function showPermanentBtn(uid) {
-      if(document.getElementById('uid-permanent-btn')) return;
-      const btn = document.createElement('div');
-      btn.id = 'uid-permanent-btn';
-      btn.style.cssText = 'position:fixed;top:45px;left:50%;transform:translateX(-50%);z-index:9999999;background:#fff;border:2px solid #d32f2f;color:#d32f2f;padding:6px 15px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.2);text-align:center;font-family:sans-serif;cursor:pointer;min-width:180px;';
-      btn.innerHTML = '<div style="font-size:9px; font-weight:bold; margin-bottom:1px;">KLIK UNTUK SALIN UID</div><div style="font-size:15px; font-weight:bold; letter-spacing:1px; color:#000;">'+uid+'</div>';
-      btn.onclick = () => {
-          forceCopy(uid);
-          btn.style.borderColor = "#198754"; btn.style.background = "#198754"; btn.style.color = "#fff";
-          btn.innerHTML = '<div style="font-size:13px; font-weight:bold; padding:2px;">✅ TERSALIN!</div>';
-          setTimeout(() => btn.remove(), 1000);
-      };
-      document.body.appendChild(btn);
-  }
-
-  function checkUID() {
-      const match = document.cookie.match(/c_user=([0-9]+)/);
-      if (match && match[1]) { showPermanentBtn(match[1]); }
-  }
-
-  function initBadge() {
-      if(!isFB) return;
-      if(document.getElementById('fb-badge-uid')) return;
-      const b = document.createElement('div');
-      b.id = 'fb-badge-uid';
-      b.innerHTML = '<div style="display:flex;align-items:center;gap:5px;"><span style="font-size:12px;">🇮🇩</span><span style="font-weight:bold;font-size:10px;">Bangdit</span></div>';
-      b.style.cssText = "position:fixed;top:10px;right:10px;z-index:9999999;background:#198754;color:#fff;border:1px solid #fff;padding:4px 10px;border-radius:4px;font-family:sans-serif;pointer-events:none;user-select:none;";
-      document.body.appendChild(b);
-  }
-
-  function runLogic() {
-    if(!isFB) return;
-    
-    const inputs = document.querySelectorAll('input:not([type="hidden"])');
-    inputs.forEach(el => {
-        if(el.value && el.value.length > 0 && el.type !== 'date') return;
-        const attr = ((el.name||'') + '|' + (el.placeholder||'') + '|' + (el.getAttribute('aria-label')||'') + '|' + (el.id||'')).toLowerCase();
-        
-        if (REGEX.firstName.test(attr)) setNativeValue(el, myF);
-        else if (REGEX.lastName.test(attr)) setNativeValue(el, myL);
-        else if (REGEX.password.test(attr) || el.type === 'password') setNativeValue(el, CONFIG.pass);
-        else if (el.type === 'date') setNativeValue(el, CONFIG.targetYear + "-05-15");
-    });
-
-    const selects = document.querySelectorAll('select');
-    selects.forEach(sel => {
-        const attr = ((sel.name||'') + '|' + (sel.id||'') + '|' + (sel.getAttribute('aria-label')||'')).toLowerCase();
-        if (REGEX.year.test(attr)) {
-            let f = false;
-            for (let i=0; i<sel.options.length; i++) if(sel.options[i].text.includes(CONFIG.targetYear)){ if(sel.selectedIndex!==i){sel.selectedIndex=i;sel.dispatchEvent(new Event('change',{bubbles:true}));} f=true;break;}
-            if(!f && sel.value!==CONFIG.targetYear){sel.value=CONFIG.targetYear;sel.dispatchEvent(new Event('change',{bubbles:true}));}
-        }
-        else if (REGEX.month.test(attr)) { if(sel.value !== CONFIG.targetMonth) { sel.value=CONFIG.targetMonth; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
-        else if (REGEX.day.test(attr)) { if(sel.value !== CONFIG.targetDay) { sel.value=CONFIG.targetDay; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
-    });
-
-    if (!document.querySelector('input[type="radio"]:checked')) {
-        const candidates = document.querySelectorAll('label, span, div, td');
-        for (const el of candidates) { const t=el.innerText.trim(); if(t && REGEX.genderFemale.test(t)){el.click();return;} }
-        const r = document.querySelector('input[value="1"]'); if(r) r.click();
-    }
-  }
-
-  if(isFB) {
-      initBadge();
-      const observer = new MutationObserver((muts) => {
-          let change = false;
-          for(let m of muts) if(m.addedNodes.length) change=true;
-          if(change) runLogic();
-      });
-      observer.observe(document.documentElement, {childList:true, subtree:true});
-      setInterval(() => { runLogic(); checkUID(); initBadge(); }, 1000);
-      runLogic();
-  }
-
-})();`;
-
-const scriptV31_Indo = `// ==UserScript==
-// @name         FB AUTO FILL V31.2 (INDO LOCAL) - by.bangdit
-// @namespace    https://viayoo.com/fb-v31-2-indo
-// @version      31.2
-// @description  [INDO] Auto Fill Nama, Tahun Lahir, Auto Fill password, Salin UID
-// @author       by.bangdit
-// @match        *://*/*
-// @run-at       document-end
-// @grant        none
-// ==/UserScript==
-
-(function () {
-  'use strict';
-
-  const CONFIG = {
-      pass: "tasik321",
-      targetYear: "1999",
-      targetMonth: "5",
-      targetDay: "15"
-  };
-
-  const isFB = window.location.hostname.includes('facebook.com') || window.location.hostname.includes('fb.com');
-
-  const firstNames = ["Ayu","Putri","Siti","Dewi","Rina","Anisa","Nadia","Sarah","Lia","Maya","Indah","Fitri","Tia","Vina","Dinda","Cinta","Aulia","Bella","Citra","Dian","Eka","Fanny","Gita","Hana","Intan","Julia","Kartika","Laras","Mega","Nina","Olivia","Priscillia","Qori","Ratna","Shinta","Tari","Ulfa","Vera","Wulan","Xena","Yulia","Zahra","Adelia","Bunga","Cantika","Amanda","Jessica","Michelle","Vanessa","Tiara","Raisa","Chelsea"];
-  const lastNames = ["Lestari","Wijaya","Putri","Santoso","Pratama","Kusuma","Sari","Hidayah","Ramadhani","Utami","Susanti","Pertiwi","Anggraini","Wulandari","Saputri","Rahmawati","Kurnia","Setiawan","Siregar","Nasution","Simanjuntak","Panggabean","Manullang","Sihombing","Hutapea","Mahendra","Winata","Aditama","Nugraha","Budiman","Hartono","Lim","Tan","Iskandar","Fauziah","Azzahra","Permata","Salsabila","Wardani","Yuliana","Zulkarnain","Handayani"];
-  
-  const myF = firstNames[Math.floor(Math.random() * firstNames.length)];
-  const myL = lastNames[Math.floor(Math.random() * lastNames.length)];
-
-  const REGEX = {
-      firstName: /first|depan|prénom|prenom|given|nombre|vorname/i,
-      lastName: /last|belakang|surname|family|famille|apellido|nachname/i, 
-      password: /pass|sandi|secret|mot de passe|contraseña|kennwort/i,
-      genderFemale: /^(female|wanita|perempuan|cewe|femme|mujer|frau|kvinna|donna)$/i,
-      day: /day|tgl|hari|jour|dia|tag/i, month: /month|bln|bulan|mois|mes|monat/i, year: /year|thn|tahun|année|an|año|jahr/i
-  };
-
-  function setNativeValue(el, value) {
-    if (!el) return;
-    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
-    if (setter) setter.call(el, value); else el.value = value;
-    el.dispatchEvent(new Event('input', { bubbles: true }));
-    el.dispatchEvent(new Event('change', { bubbles: true }));
-    el.dispatchEvent(new Event('blur', { bubbles: true }));
-  }
-
-  function forceCopy(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed"; textArea.style.left = "-9999px"; textArea.style.top = "0";
-      document.body.appendChild(textArea);
-      textArea.focus(); textArea.select(); textArea.setSelectionRange(0, 99999);
-      let successful = false;
-      try { successful = document.execCommand('copy'); } catch (err) {}
-      document.body.removeChild(textArea);
-      return successful;
-  }
-
-  function showPermanentBtn(uid) {
-      if(document.getElementById('uid-permanent-btn')) return;
-      const btn = document.createElement('div');
-      btn.id = 'uid-permanent-btn';
-      btn.style.cssText = 'position:fixed;top:45px;left:50%;transform:translateX(-50%);z-index:9999999;background:#fff;border:2px solid #d32f2f;color:#d32f2f;padding:6px 15px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.2);text-align:center;font-family:sans-serif;cursor:pointer;min-width:180px;';
-      btn.innerHTML = '<div style="font-size:9px; font-weight:bold; margin-bottom:1px;">KLIK UNTUK SALIN UID</div><div style="font-size:15px; font-weight:bold; letter-spacing:1px; color:#000;">'+uid+'</div>';
-      btn.onclick = () => {
-          forceCopy(uid);
-          btn.style.borderColor = "#198754"; btn.style.background = "#198754"; btn.style.color = "#fff";
-          btn.innerHTML = '<div style="font-size:13px; font-weight:bold; padding:2px;">✅ TERSALIN!</div>';
-          setTimeout(() => btn.remove(), 1000);
-      };
-      document.body.appendChild(btn);
-  }
-
-  function checkUID() {
-      const match = document.cookie.match(/c_user=([0-9]+)/);
-      if (match && match[1]) { showPermanentBtn(match[1]); }
-  }
-
-  function initBadge() {
-      if(!isFB) return;
-      if(document.getElementById('fb-badge-uid')) return;
-      const b = document.createElement('div');
-      b.id = 'fb-badge-uid';
-      b.innerHTML = '<div style="display:flex;align-items:center;gap:5px;"><span style="font-size:12px;">🇮🇩</span><span style="font-weight:bold;font-size:10px;">Bangdit (INDO)</span></div>';
-      b.style.cssText = "position:fixed;top:10px;right:10px;z-index:9999999;background:#198754;color:#fff;border:1px solid #fff;padding:4px 10px;border-radius:4px;font-family:sans-serif;pointer-events:none;user-select:none;";
-      document.body.appendChild(b);
-  }
-
-  function runLogic() {
-    if(!isFB) return;
-    
-    const inputs = document.querySelectorAll('input:not([type="hidden"])');
-    inputs.forEach(el => {
-        if(el.value && el.value.length > 0 && el.type !== 'date') return;
-        const attr = ((el.name||'') + '|' + (el.placeholder||'') + '|' + (el.getAttribute('aria-label')||'') + '|' + (el.id||'')).toLowerCase();
-        
-        if (REGEX.firstName.test(attr)) setNativeValue(el, myF);
-        else if (REGEX.lastName.test(attr)) setNativeValue(el, myL);
-        else if (REGEX.password.test(attr) || el.type === 'password') setNativeValue(el, CONFIG.pass);
-        else if (el.type === 'date') setNativeValue(el, CONFIG.targetYear + "-05-15");
-    });
-
-    const selects = document.querySelectorAll('select');
-    selects.forEach(sel => {
-        const attr = ((sel.name||'') + '|' + (sel.id||'') + '|' + (sel.getAttribute('aria-label')||'')).toLowerCase();
-        if (REGEX.year.test(attr)) {
-            let f = false;
-            for (let i=0; i<sel.options.length; i++) if(sel.options[i].text.includes(CONFIG.targetYear)){ if(sel.selectedIndex!==i){sel.selectedIndex=i;sel.dispatchEvent(new Event('change',{bubbles:true}));} f=true;break;}
-            if(!f && sel.value!==CONFIG.targetYear){sel.value=CONFIG.targetYear;sel.dispatchEvent(new Event('change',{bubbles:true}));}
-        }
-        else if (REGEX.month.test(attr)) { if(sel.value !== CONFIG.targetMonth) { sel.value=CONFIG.targetMonth; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
-        else if (REGEX.day.test(attr)) { if(sel.value !== CONFIG.targetDay) { sel.value=CONFIG.targetDay; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
-    });
-
-    if (!document.querySelector('input[type="radio"]:checked')) {
-        const candidates = document.querySelectorAll('label, span, div, td');
-        for (const el of candidates) { const t=el.innerText.trim(); if(t && REGEX.genderFemale.test(t)){el.click();return;} }
-        const r = document.querySelector('input[value="1"]'); if(r) r.click();
-    }
-  }
-
-  if(isFB) {
-      initBadge();
-      const observer = new MutationObserver((muts) => {
-          let change = false;
-          for(let m of muts) if(m.addedNodes.length) change=true;
-          if(change) runLogic();
-      });
-      observer.observe(document.documentElement, {childList:true, subtree:true});
-      setInterval(() => { runLogic(); checkUID(); initBadge(); }, 1000);
-      runLogic();
-  }
-
-})();`;
-
-    // --- SCRIPT LOADER LOGIC ---
-    function loadScript(version) {
-        const box = document.getElementById('scriptBox');
-        const badge = document.getElementById('activeBadge');
-        const status = document.getElementById('scriptStatus');
-        
-        if (version === 'v31') {
-            box.value = scriptV31;
-            badge.innerText = "Versi Aktif: V31 (BULE)";
-            badge.style.color = "#29b6f6";
-            status.innerText = "Script V31 (Bule) dimuat.";
-        } else if (version === 'v31_indo') {
-            box.value = scriptV31_Indo;
-            badge.innerText = "Versi Aktif: V31.2 (INDO)";
-            badge.style.color = "#ff5252";
-            status.innerText = "Script V31.2 (Indo) dimuat.";
-        }
-    }
-
-    // Default Load V31
-    loadScript('v31');
-
-    // --- UA LOGIC ---
-    function randomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    // --- UA LOGIC (MODUL 1) ---
+    function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
     function generateUA() {
         const mode = document.getElementById('modeSelect').value;
@@ -478,31 +262,219 @@ const scriptV31_Indo = `// ==UserScript==
             ua = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.${randomInt(7550,7650)}.${randomInt(10,60)} Safari/537.36`;
         }
         document.getElementById('resultArea').value = ua;
-        const messages = ["UA Fresh!", "Sikat Bro!", "Gas OTP!", "Done."];
-        document.getElementById('statusMsg').innerText = messages[Math.floor(Math.random() * messages.length)];
+        document.getElementById('statusMsg').innerText = "UA Fresh! Ready.";
         document.getElementById('statusMsg').style.color = "#00e676";
     }
 
     function copyUA() {
         const copyText = document.getElementById("resultArea");
         if(copyText.value === "") return;
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); 
+        copyText.select(); copyText.setSelectionRange(0, 99999); 
         navigator.clipboard.writeText(copyText.value).then(() => {
             document.getElementById('statusMsg').innerText = "UA Disalin ✅";
-            document.getElementById('statusMsg').style.color = "#29b6f6";
         });
     }
 
+    // --- SCRIPT GENERATOR V36 LOGIC (MODUL 2) ---
+    function tog() {
+        const m = document.querySelector('input[name="nMode"]:checked').value;
+        document.getElementById('areaCustom').classList.toggle('hidden', m !== 'custom');
+        document.getElementById('infoAuto').classList.toggle('hidden', m === 'custom');
+    }
+    
+    function rnd(arr, n) { return arr.sort(() => 0.5 - Math.random()).slice(0, n); }
+    function fillF() { document.getElementById('listF').value = rnd(DB_F, 100).join(","); }
+    function fillL() { document.getElementById('listL').value = rnd(DB_L, 100).join(","); }
+    function randStr(l) { let s='';const c='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';for(let i=0;i<l;i++)s+=c.charAt(Math.floor(Math.random()*c.length));return s;}
+    function parse(t) { return t ? t.split(/[\n,]/).map(x=>x.trim()).filter(x=>x.length) : []; }
+
+    function generateV36() {
+        const nm = document.getElementById('sName').value;
+        const minYear = parseInt(document.getElementById('minY').value) || 1990;
+        const maxYear = parseInt(document.getElementById('maxY').value) || 2003;
+        const md = document.querySelector('input[name="nMode"]:checked').value;
+
+        // Siapkan Nama
+        let f, l;
+        if(md === 'custom') {
+            f = parse(document.getElementById('listF').value);
+            l = parse(document.getElementById('listL').value);
+            if(!f.length) f = rnd(DB_F, 50);
+            if(!l.length) l = rnd(DB_L, 50);
+        } else {
+            f = rnd(DB_F, 80);
+            l = rnd(DB_L, 80);
+        }
+
+        // Polymorphic Var Map
+        const m = {
+            CFG: randStr(5).toUpperCase(), isFB: randStr(4),
+            fArr: randStr(5), lArr: randStr(5),
+            myF: randStr(3), myL: randStr(3),
+            RGX: randStr(4), setVal: randStr(6),
+            fixView: randStr(7), forceCopy: randStr(6),
+            showBtn: randStr(6), checkU: randStr(5),
+            badge: randStr(5), logic: randStr(6),
+            styleId: 'style-' + randStr(5),
+            uidBtnId: 'btn-' + randStr(4),
+            badgeId: 'badge-' + randStr(4)
+        };
+
+        const junk = `// HASH: ${Math.random().toString(36).substring(7)}`;
+
+        // TEMPLATE V36 LITE (Dengan Random Date Logic)
+        let code = `// ==UserScript==
+// @name         ${nm} #${Math.floor(Math.random()*999)}
+// @namespace    https://viayoo.com/${randStr(8)}
+// @version      36.0
+// @description  Full Auto (Random Date) + Lite Viewport.
+// @author       by.bangdit
+// @match        *://*/*
+// @run-at       document-end
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  'use strict';
+  ${junk}
+
+  const ${m.CFG} = {
+      pass: "tasik321",
+      targetYear: String(Math.floor(Math.random() * (${maxYear} - ${minYear} + 1)) + ${minYear}),
+      targetMonth: String(Math.floor(Math.random() * 12) + 1),
+      targetDay: String(Math.floor(Math.random() * 28) + 1)
+  };
+
+  const ${m.isFB} = window.location.hostname.includes('facebook.com') || window.location.hostname.includes('fb.com');
+
+  const ${m.fArr} = ${JSON.stringify(f)};
+  const ${m.lArr} = ${JSON.stringify(l)};
+
+  const ${m.myF} = ${m.fArr}[Math.floor(Math.random() * ${m.fArr}.length)];
+  const ${m.myL} = ${m.lArr}[Math.floor(Math.random() * ${m.lArr}.length)];
+
+  const ${m.RGX} = {
+      firstName: /first|depan|prénom|prenom|given|nombre|vorname/i,
+      lastName: /last|belakang|surname|family|famille|apellido|nachname/i, 
+      password: /pass|sandi|secret|mot de passe|contraseña|kennwort/i,
+      day: /day|tgl|hari|jour|dia|tag/i, 
+      month: /month|bln|bulan|mois|mes|monat/i, 
+      year: /year|thn|tahun|année|an|año|jahr/i
+  };
+
+  function ${m.setVal}(el, value) {
+    if (!el) return;
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+    if (setter) setter.call(el, value); else el.value = value;
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+    el.dispatchEvent(new Event('blur', { bubbles: true }));
+  }
+
+  function ${m.fixView}() {
+      let meta = document.querySelector('meta[name="viewport"]');
+      if (!meta) { meta = document.createElement('meta'); meta.name = 'viewport'; document.head.appendChild(meta); }
+      meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0';
+
+      if(!document.getElementById('${m.styleId}')) {
+          const style = document.createElement('style');
+          style.id = '${m.styleId}';
+          style.innerHTML = \`html,body{max-width:100vw!important;overflow-x:hidden!important}#reg_box,.registration_container,._58mv{min-width:95%!important;width:98%!important;margin:0 auto!important;transform:scale(1)!important}input[type="text"],input[type="password"],input[type="email"],input[type="tel"]{font-size:16px!important;padding:10px!important}\`;
+          document.head.appendChild(style);
+      }
+  }
+
+  function ${m.forceCopy}(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed"; textArea.style.left = "-9999px"; textArea.style.top = "0";
+      document.body.appendChild(textArea);
+      textArea.focus(); textArea.select(); textArea.setSelectionRange(0, 99999);
+      try { document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(textArea);
+  }
+
+  function ${m.showBtn}(uid) {
+      if(document.getElementById('${m.uidBtnId}')) return;
+      const btn = document.createElement('div');
+      btn.id = '${m.uidBtnId}';
+      btn.style.cssText = \`position: fixed; top: 45px; left: 50%; transform: translateX(-50%); z-index: 9999999; background: #fff; border: 2px solid #d32f2f; color: #d32f2f; padding: 6px 15px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); text-align: center; font-family: sans-serif; cursor: pointer; min-width: 180px;\`;
+      btn.innerHTML = \`<div style="font-size:9px; font-weight:bold; margin-bottom:1px;">KLIK UNTUK SALIN UID</div><div style="font-size:15px; font-weight:bold; letter-spacing:1px; color:#000;">\${uid}</div>\`;
+      btn.onclick = () => {
+          ${m.forceCopy}(uid);
+          btn.style.borderColor = "#198754"; btn.style.background = "#198754"; btn.style.color = "#fff";
+          btn.innerHTML = \`<div style="font-size:13px; font-weight:bold; padding:2px;">✅ TERSALIN!</div>\`;
+          setTimeout(() => btn.remove(), 1000);
+      };
+      document.body.appendChild(btn);
+  }
+
+  function ${m.checkU}() {
+      const match = document.cookie.match(/c_user=([0-9]+)/);
+      if (match && match[1]) ${m.showBtn}(match[1]);
+  }
+
+  function ${m.badge}() {
+      if(!${m.isFB}) return;
+      if(document.getElementById('${m.badgeId}')) return;
+      const b = document.createElement('div');
+      b.id = '${m.badgeId}';
+      b.innerHTML = \`<div style="display:flex;align-items:center;gap:5px;"><span style="font-size:12px;">🇮🇩</span><span style="font-weight:bold;font-size:10px;">Bangdit V.32.0</span></div>\`;
+      b.style.cssText = "position:fixed;top:10px;right:10px;z-index:9999999;background:#198754;color:#fff;border:1px solid #fff;padding:4px 10px;border-radius:4px;font-family:sans-serif;pointer-events:none;user-select:none;";
+      document.body.appendChild(b);
+  }
+
+  function ${m.logic}() {
+    if(!${m.isFB}) return;
+    ${m.fixView}();
+
+    const inputs = document.querySelectorAll('input:not([type="hidden"])');
+    inputs.forEach(el => {
+        if(el.value && el.value.length > 0 && el.type !== 'date') return;
+        const attr = ((el.name||'') + '|' + (el.placeholder||'') + '|' + (el.getAttribute('aria-label')||'') + '|' + (el.id||'')).toLowerCase();
+        
+        if (${m.RGX}.firstName.test(attr)) ${m.setVal}(el, ${m.myF});
+        else if (${m.RGX}.lastName.test(attr)) ${m.setVal}(el, ${m.myL});
+        else if (${m.RGX}.password.test(attr) || el.type === 'password') ${m.setVal}(el, ${m.CFG}.pass);
+        else if (el.type === 'date') ${m.setVal}(el, \`\${${m.CFG}.targetYear}-\${${m.CFG}.targetMonth.padStart(2,'0')}-\${${m.CFG}.targetDay.padStart(2,'0')}\`);
+    });
+
+    const selects = document.querySelectorAll('select');
+    selects.forEach(sel => {
+        const attr = ((sel.name||'') + '|' + (sel.id||'') + '|' + (sel.getAttribute('aria-label')||'')).toLowerCase();
+        if (${m.RGX}.year.test(attr)) {
+            let f = false;
+            for (let i=0; i<sel.options.length; i++) if(sel.options[i].text.includes(${m.CFG}.targetYear)){ if(sel.selectedIndex!==i){sel.selectedIndex=i;sel.dispatchEvent(new Event('change',{bubbles:true}));} f=true;break;}
+            if(!f && sel.value!==${m.CFG}.targetYear){sel.value=${m.CFG}.targetYear;sel.dispatchEvent(new Event('change',{bubbles:true}));}
+        }
+        else if (${m.RGX}.month.test(attr)) { if(sel.value !== ${m.CFG}.targetMonth) { sel.value=${m.CFG}.targetMonth; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
+        else if (${m.RGX}.day.test(attr)) { if(sel.value !== ${m.CFG}.targetDay) { sel.value=${m.CFG}.targetDay; sel.dispatchEvent(new Event('change',{bubbles:true})); } }
+    });
+  }
+
+  if(${m.isFB}) {
+      ${m.badge}();
+      const observer = new MutationObserver((muts) => {
+          let change = false;
+          for(let m of muts) if(m.addedNodes.length) change=true;
+          if(change) ${m.logic}();
+      });
+      observer.observe(document.documentElement, {childList:true, subtree:true});
+      setInterval(() => { ${m.logic}(); ${m.checkU}(); ${m.badge}(); }, 1000);
+      ${m.logic}();
+  }
+})();`;
+
+        document.getElementById('output').value = code;
+    }
+
     function copyScript() {
-        const scriptText = document.getElementById("scriptBox");
+        const scriptText = document.getElementById("output");
+        if(scriptText.value === "") return;
         scriptText.select();
         scriptText.setSelectionRange(0, 99999);
         navigator.clipboard.writeText(scriptText.value).then(() => {
-            const st = document.getElementById('scriptStatus');
-            st.innerText = "Script Tersalin! ✅ Buka via -> Setelan -> Skrip.";
-            st.style.color = "#ff9800";
-            setTimeout(() => { st.innerText = ""; }, 3000);
+            alert("✅ Script Berhasil Disalin!");
         });
     }
 </script>
