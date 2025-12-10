@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN KEY GENERATOR</title>
+    <style>
+        body { background: #000; color: #00ff88; font-family: 'Courier New', monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .box { border: 2px solid #00ff88; padding: 30px; text-align: center; border-radius: 10px; box-shadow: 0 0 20px rgba(0,255,136,0.2); width: 90%; max-width: 400px; }
+        h2 { margin: 0 0 20px 0; text-transform: uppercase; }
+        input { background: #111; border: 1px solid #333; color: #fff; padding: 10px; width: 100%; box-sizing: border-box; text-align: center; font-size: 1.2rem; margin-bottom: 20px; font-family: inherit; }
+        button { background: #00ff88; color: #000; font-weight: bold; border: none; padding: 15px; width: 100%; cursor: pointer; font-size: 1rem; text-transform: uppercase; }
+        button:hover { background: #fff; }
+        .note { font-size: 10px; color: #555; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>🔑 VIP KEY MAKER</h2>
+        <div style="margin-bottom:10px; font-size:12px; color:#888;">GENERATOR UNTUK TOOLS VIP</div>
+        
+        <!-- HASIL KEY MUNCUL DISINI -->
+        <input type="text" id="result" readonly placeholder="KLIK GENERATE..." onclick="this.select();">
+        
+        <button onclick="createKey()">GENERATE KEY BARU</button>
+        <div class="note">Key ini valid untuk login di toolsvip.netlify.app</div>
+    </div>
+
+    <script>
+        // === RAHASIA DAPUR (PASSWORD UTAMA) ===
+        // Ganti ini sesuka hati, TAPI HARUS SAMA dengan yang di file index.html
+        const SECRET_SALT = "BANGDIT_GACOR_V36"; 
+
+        function createKey() {
+            // 1. Bikin Random Prefix (Misal: A7X9)
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            let prefix = "";
+            for(let i=0; i<4; i++) prefix += chars.charAt(Math.floor(Math.random() * chars.length));
+
+            // 2. Hitung Signature berdasarkan Password Rahasia
+            const signature = generateSignature(prefix, SECRET_SALT);
+
+            // 3. Gabungkan (Format: PREFIX-SIGNATURE)
+            const finalKey = `${prefix}-${signature}`;
+
+            document.getElementById('result').value = finalKey;
+        }
+
+        // Fungsi Hash Sederhana (JANGAN DIUBAH)
+        function generateSignature(text, secret) {
+            let hash = 0;
+            const combined = text + secret;
+            for (let i = 0; i < combined.length; i++) {
+                const char = combined.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash;
+            }
+            // Ambil 4 karakter hex dari hash
+            return Math.abs(hash).toString(16).substring(0, 4).toUpperCase().padStart(4, '0');
+        }
+    </script>
+</body>
+</html>
