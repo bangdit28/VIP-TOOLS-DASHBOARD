@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIP TOOLS DASHBOARD by.bangdit</title>
     <style>
+        /* --- STYLE DASAR --- */
         body {
             background-color: #050505;
             color: #e0e0e0;
@@ -15,6 +16,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px 0;
+            overflow-x: hidden;
         }
         .container {
             background-color: #121212;
@@ -26,226 +28,274 @@
             text-align: center;
             border: 1px solid #333;
             margin-bottom: 20px;
+            filter: blur(15px); /* BLUR SAAT TERKUNCI */
+            pointer-events: none;
+            transition: 0.5s;
         }
-        h2 {
-            color: #00e676;
-            margin-top: 0;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        h3 {
-            color: #29b6f6;
-            font-size: 1rem;
-            margin: 25px 0 15px 0;
-            text-align: left;
-            border-bottom: 1px solid #333;
-            padding-bottom: 5px;
-        }
-        
-        /* Form Elements */
-        label {
-            display: block;
-            text-align: left;
-            font-size: 0.75rem;
-            color: #888;
-            margin-bottom: 4px;
-            font-weight: bold;
-        }
-        
-        input[type="text"], input[type="number"], select {
-            background-color: #1e1e1e;
-            color: #fff;
-            padding: 12px;
-            border: 1px solid #333;
-            border-radius: 5px;
-            width: 100%;
-            font-family: inherit;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            outline: none;
-            box-sizing: border-box;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            border-color: #00e676;
+        .container.unlocked {
+            filter: blur(0);
+            pointer-events: auto;
         }
 
+        /* --- LOCKSCREEN OVERLAY --- */
+        #loginOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 99999;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+        }
+        .login-box {
+            background: #111; padding: 30px; border: 1px solid #00e676; border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.2); width: 85%; max-width: 400px; text-align: center;
+        }
+        .login-input {
+            width: 100%; padding: 15px; background: #222; border: 1px solid #444; color: #fff;
+            text-align: center; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 15px;
+            border-radius: 5px; outline: none; text-transform: uppercase;
+        }
+        .login-btn {
+            width: 100%; padding: 15px; background: #00e676; color: #000; border: none; font-weight: bold;
+            font-size: 1rem; cursor: pointer; border-radius: 5px; text-transform: uppercase;
+        }
+        .error-msg { color: #ff5252; font-size: 0.8rem; margin-top: 15px; display: none; font-weight:bold; }
+
+        /* --- DASHBOARD ELEMENTS --- */
+        h2 { color: #00e676; margin-top: 0; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }
+        h3 { color: #29b6f6; font-size: 1rem; margin: 25px 0 15px 0; text-align: left; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        
+        label { display: block; text-align: left; font-size: 0.75rem; color: #888; margin-bottom: 4px; font-weight: bold; }
+        input[type="text"], input[type="number"], select {
+            background-color: #1e1e1e; color: #fff; padding: 12px; border: 1px solid #333;
+            border-radius: 5px; width: 100%; font-family: inherit; margin-bottom: 10px;
+            font-size: 0.9rem; outline: none; box-sizing: border-box;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #00e676; }
+
         textarea {
-            width: 100%;
-            background-color: #080808;
-            color: #00ff00;
-            border: 1px solid #333;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 0.7rem;
-            resize: vertical;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-            font-family: 'Consolas', monospace;
-            white-space: pre;
-            overflow-x: auto;
+            width: 100%; background-color: #080808; color: #00ff00; border: 1px solid #333;
+            padding: 10px; border-radius: 5px; font-size: 0.7rem; resize: vertical;
+            box-sizing: border-box; margin-bottom: 10px; font-family: 'Consolas', monospace;
+            white-space: pre; overflow-x: auto;
         }
         
         .ua-box { height: 80px; }
         .script-box { height: 250px; color: #aaffaa; border: 1px solid #555; }
 
-        /* Buttons */
         .btn {
-            background-color: #00e676;
-            color: #000;
-            border: none;
-            padding: 12px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.2s;
-            text-transform: uppercase;
-            margin-bottom: 8px;
+            background-color: #00e676; color: #000; border: none; padding: 12px;
+            font-size: 0.9rem; font-weight: bold; border-radius: 5px; cursor: pointer;
+            width: 100%; transition: 0.2s; text-transform: uppercase; margin-bottom: 8px;
         }
         .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
         .btn-blue { background-color: #29b6f6; }
         .btn-orange { background-color: #ff9800; color: #fff; }
-        
-        /* Utility Classes */
+
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 5px; }
-        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 5px; }
-        
         .status { font-size: 0.8rem; color: #666; height: 20px; margin-bottom: 10px; }
         .hidden { display: none; }
 
-        /* Generator Specific Styles */
-        .custom-area {
-            background: #1a1a1a;
-            padding: 15px;
-            border: 1px dashed #444;
-            border-radius: 6px;
-            margin-top: 10px;
-            margin-bottom: 15px;
-        }
-        .radio-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            background: #111;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .radio-label {
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #ccc;
-        }
-        .btn-mini {
-            background: #333; color: #fff; font-size: 0.7rem; padding: 4px 8px; border: 1px solid #444; border-radius: 3px; cursor: pointer; float: right; margin-top: -20px;
-        }
+        /* Generator Elements */
+        .radio-group { display: flex; gap: 15px; margin-bottom: 15px; background: #111; padding: 10px; border-radius: 5px; }
+        .radio-label { font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 5px; color: #ccc; }
+        .custom-area { background: #1a1a1a; padding: 15px; border: 1px dashed #444; border-radius: 6px; margin-top: 10px; margin-bottom: 15px; }
+        .btn-mini { background: #333; color: #fff; font-size: 0.7rem; padding: 4px 8px; border: 1px solid #444; border-radius: 3px; cursor: pointer; float: right; margin-top: -20px; }
         .btn-mini:hover { background: #555; border-color: #00e676; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>VIP TOOLS BARUDAK TASIK</h2>
-    <div style="font-size: 10px; color: #666; margin-bottom: 20px;">DASHBOARD BY.BANGDIT</div>
-    
-    <!-- MODULE 1: UA GENERATOR -->
-    <h3>1. UA DEVICE GENERATOR</h3>
-    <select id="modeSelect">
-        <option value="arab">🚀 HP: Android 16 (Arab - Asiacell)</option>
-        <option value="iphone">🍎 HP: iPhone iOS 18 (Fresh)</option>
-        <option value="linux">💻 PC: Linux aarch64 (Anti-Detect)</option>
-        <option value="windows">💻 PC: Windows 10 Chrome (Standard)</option>
-    </select>
-
-    <textarea id="resultArea" class="ua-box" readonly placeholder="User Agent..."></textarea>
-    
-    <div class="grid-2">
-        <button class="btn" onclick="generateUA()">⚡ SPIN UA</button>
-        <button class="btn btn-blue" onclick="copyUA()">📋 COPY</button>
-    </div>
-    <div class="status" id="statusMsg">Ready.</div>
-
-    <!-- MODULE 2: SCRIPT GENERATOR V36 -->
-    <h3>2. SCRIPT GENERATOR V36 (LITE)</h3>
-    
-    <!-- Config Dasar -->
-    <div class="grid-2">
-        <div>
-            <label>Nama Script</label>
-            <input type="text" id="sName" value="FB AUTO V36 LITE">
-        </div>
-        <div>
-            <label>Password (Fixed)</label>
-            <input type="text" value="tasik321" readonly style="color:#666; cursor:not-allowed;">
+    <!-- 1. LOGIN OVERLAY -->
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2 style="margin-bottom:20px;">🔒 ACCESS LOCKED</h2>
+            <div style="font-size:10px; color:#aaa; margin-bottom:20px;">TOOLS VIP BY.BANGDIT V36</div>
+            
+            <input type="text" id="accessKey" class="login-input" placeholder="MASUKAN KEY..." autocomplete="off">
+            <button class="login-btn" onclick="verifyKey()">BUKA TOOLS 🔓</button>
+            
+            <div id="errorMsg" class="error-msg">KEY SALAH / SUDAH HANGUS!</div>
         </div>
     </div>
 
-    <!-- Config Tahun Random -->
-    <div style="background:#0a0a0a; padding:10px; border-radius:5px; border:1px solid #222; margin-bottom:10px;">
-        <label style="color:#00e676; margin-bottom:8px;">RENTANG TAHUN (RANDOM)</label>
+    <!-- 2. MAIN DASHBOARD -->
+    <div class="container" id="mainContent">
+        <h2>VIP TOOLS BARUDAK TASIK</h2>
+        <div style="font-size: 10px; color: #666; margin-bottom: 20px;">DASHBOARD BY.BANGDIT</div>
+        
+        <!-- MODULE 1: UA GENERATOR -->
+        <h3>1. UA DEVICE GENERATOR</h3>
+        <select id="modeSelect">
+            <option value="arab">🚀 HP: Android 16 (Arab - Asiacell)</option>
+            <option value="iphone">🍎 HP: iPhone iOS 18 (Fresh)</option>
+            <option value="linux">💻 PC: Linux aarch64 (Anti-Detect)</option>
+            <option value="windows">💻 PC: Windows 10 Chrome (Standard)</option>
+        </select>
+
+        <textarea id="resultArea" class="ua-box" readonly placeholder="User Agent..."></textarea>
+        
+        <div class="grid-2">
+            <button class="btn" onclick="generateUA()">⚡ SPIN UA</button>
+            <button class="btn btn-blue" onclick="copyUA()">📋 COPY</button>
+        </div>
+        <div class="status" id="statusMsg">Ready.</div>
+
+        <!-- MODULE 2: SCRIPT GENERATOR V36 -->
+        <h3>2. SCRIPT GENERATOR V36 (LITE)</h3>
+        
         <div class="grid-2">
             <div>
-                <label>Min (Terdewasa)</label>
-                <input type="number" id="minY" value="1990">
+                <label>Nama Script</label>
+                <input type="text" id="sName" value="FB AUTO V36 LITE">
             </div>
             <div>
-                <label>Max (Termuda)</label>
-                <input type="number" id="maxY" value="2003">
+                <label>Password (Fixed)</label>
+                <input type="text" value="tasik321" readonly style="color:#666; cursor:not-allowed;">
             </div>
         </div>
-        <div style="font-size:9px; color:#555; text-align:left;">*Bulan & Tanggal otomatis random.</div>
-    </div>
 
-    <!-- Mode Nama -->
-    <div class="radio-group">
-        <label class="radio-label">
-            <input type="radio" name="nMode" value="auto" checked onchange="tog()"> 
-            Mode Auto (Hidden Database)
-        </label>
-        <label class="radio-label">
-            <input type="radio" name="nMode" value="custom" onchange="tog()"> 
-            Mode Custom (Edit Nama)
-        </label>
-    </div>
+        <!-- Random Date Config -->
+        <div style="background:#0a0a0a; padding:10px; border-radius:5px; border:1px solid #222; margin-bottom:10px;">
+            <label style="color:#00e676; margin-bottom:8px;">RENTANG TAHUN (RANDOM)</label>
+            <div class="grid-2">
+                <div>
+                    <label>Min (Terdewasa)</label>
+                    <input type="number" id="minY" value="1990">
+                </div>
+                <div>
+                    <label>Max (Termuda)</label>
+                    <input type="number" id="maxY" value="2003">
+                </div>
+            </div>
+            <div style="font-size:9px; color:#555; text-align:left;">*Tahun, Bulan, Tanggal otomatis diacak setiap run.</div>
+        </div>
 
-    <div id="infoAuto" style="font-size:10px; color:#888; text-align:left; margin-bottom:15px; padding-left:5px; border-left:2px solid #00e676;">
-        Script akan otomatis diisi 80 nama cewek acak dari database internal setiap kali generate.
-    </div>
+        <!-- Name Mode -->
+        <div class="radio-group">
+            <label class="radio-label">
+                <input type="radio" name="nMode" value="auto" checked onchange="tog()"> 
+                Mode Auto (Hidden DB)
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="nMode" value="custom" onchange="tog()"> 
+                Mode Custom (Edit Nama)
+            </label>
+        </div>
 
-    <!-- Area Custom -->
-    <div id="areaCustom" class="custom-area hidden">
-        <label>List Nama Depan</label>
-        <button class="btn-mini" onclick="fillF()">🎲 100 Random</button>
-        <textarea id="listF" style="height:80px;" placeholder="Contoh: Aulia, Putri, Siti..."></textarea>
+        <div id="infoAuto" style="font-size:10px; color:#888; text-align:left; margin-bottom:15px; padding-left:5px; border-left:2px solid #00e676;">
+            System akan otomatis mengambil 80 nama cewek acak dari database internal (Polymorphic).
+        </div>
+
+        <!-- Custom Area -->
+        <div id="areaCustom" class="custom-area hidden">
+            <label>List Nama Depan</label>
+            <button class="btn-mini" onclick="fillF()">🎲 100 Random</button>
+            <textarea id="listF" style="height:80px;" placeholder="Contoh: Aulia, Putri, Siti..."></textarea>
+            
+            <label>List Nama Belakang</label>
+            <button class="btn-mini" onclick="fillL()">🎲 100 Random</button>
+            <textarea id="listL" style="height:80px;" placeholder="Contoh: Rahmawati, Lestari..."></textarea>
+        </div>
+
+        <!-- Output -->
+        <textarea id="output" class="script-box" placeholder="Klik tombol generate di bawah..."></textarea>
         
-        <label>List Nama Belakang</label>
-        <button class="btn-mini" onclick="fillL()">🎲 100 Random</button>
-        <textarea id="listL" style="height:80px;" placeholder="Contoh: Rahmawati, Lestari..."></textarea>
+        <div class="grid-2">
+            <button class="btn" onclick="generateV36()">⚡ GENERATE SCRIPT</button>
+            <button class="btn btn-orange" onclick="copyScript()">📥 SALIN SCRIPT</button>
+        </div>
     </div>
-
-    <!-- Output Script -->
-    <textarea id="output" class="script-box" placeholder="Klik tombol generate di bawah..."></textarea>
-    
-    <div class="grid-2">
-        <button class="btn" onclick="generateV36()">⚡ GENERATE SCRIPT</button>
-        <button class="btn btn-orange" onclick="copyScript()">📥 SALIN SCRIPT</button>
-    </div>
-
-</div>
 
 <script>
-    // --- DATABASE NAMA (KHUSUS CEWEK) ---
+    // ==========================================
+    // 🔐 SYSTEM ACTIVATION KEY (ALGORITMA V36)
+    // ==========================================
+    
+    // PASSWORD RAHASIA (WAJIB SAMA DENGAN ADMIN GENERATOR)
+    const SECRET_SALT = "BANGDIT_GACOR_V36"; 
+
+    function verifyKey() {
+        const input = document.getElementById('accessKey').value.trim().toUpperCase();
+        
+        // 1. Cek Format Key
+        if (!input || !input.includes('-')) {
+            showError("FORMAT KEY TIDAK VALID!"); return;
+        }
+
+        // 2. Cek Blacklist (1 Key = 1 Device)
+        // Key yang sudah dipakai disimpan di LocalStorage Browser User
+        const usedKeys = JSON.parse(localStorage.getItem('deadKeys') || '[]');
+        if (usedKeys.includes(input)) {
+            showError("KEY SUDAH HANGUS / PERNAH DIPAKAI!"); return;
+        }
+
+        // 3. Validasi Tanda Tangan (Signature)
+        const parts = input.split('-');
+        const prefix = parts[0];     // Contoh: XK9L
+        const signature = parts[1];  // Contoh: AB12
+
+        // Kita hitung ulang hash-nya
+        const validSignature = generateSignature(prefix, SECRET_SALT);
+
+        if (signature === validSignature) {
+            // -- KEY BENAR --
+            
+            // A. Masukkan ke Blacklist HP ini
+            usedKeys.push(input);
+            localStorage.setItem('deadKeys', JSON.stringify(usedKeys));
+
+            // B. Simpan Sesi (Hilang saat tab ditutup)
+            sessionStorage.setItem('isLoggedIn', 'true');
+
+            unlockUI();
+        } else {
+            // -- KEY SALAH --
+            showError("KEY TIDAK TERDAFTAR!");
+        }
+    }
+
+    function showError(msg) {
+        const el = document.getElementById('errorMsg');
+        el.innerText = msg;
+        el.style.display = 'block';
+    }
+
+    // Fungsi Hash (SAMA DENGAN GENERATOR)
+    function generateSignature(text, secret) {
+        let hash = 0;
+        const combined = text + secret;
+        for (let i = 0; i < combined.length; i++) {
+            const char = combined.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash;
+        }
+        return Math.abs(hash).toString(16).substring(0, 4).toUpperCase().padStart(4, '0');
+    }
+
+    function unlockUI() {
+        document.getElementById('loginOverlay').style.display = 'none';
+        document.getElementById('mainContent').classList.add('unlocked');
+    }
+
+    // Cek Sesi saat reload
+    window.onload = function() {
+        if (sessionStorage.getItem('isLoggedIn') === 'true') {
+            unlockUI();
+        } else {
+            // Kunci
+            document.getElementById('loginOverlay').style.display = 'flex';
+            document.getElementById('mainContent').classList.remove('unlocked');
+        }
+    }
+
+    // ==========================================
+    // 🛠️ TOOLS LOGIC (UA & SCRIPT)
+    // ==========================================
+
+    // DATABASE CEWEK INDO
     const DB_F = ["Aulia","Nadhira","Keisya","Nayla","Anindya","Tasya","Salma","Adelina","Maharani","Celine","Naya","Keyra","Viona","Ziva","Syifa","Nadine","Alya","Kirana","Fatin","Shanaya","Rania","Keira","Adelia","Aurelia","Nisa","Zahira","Alika","Dinda","Nayara","Karin","Lala","Felisha","Anggun","Syakila","Alesha","Shanice","Meisya","Zivana","Raysa","Clairine","Kayla","Adzkia","Nara","Amara","Alisha","Aruna","Elora","Felicia","Keysha","Syandria","Vella","Karina","Gita","Melani","Salsabila","Tania","Arsyila","Chelsea","Nathania","Andini","Fara","Diva","Salsa","Alifa","Kirani","Almira","Maura","Nayka","Levina","Selina","Alissa","Vanya","Kesha","Aveline","Dania","Shanum","Alena","Naila","Kenzie","Saira","Laras","Marsya","Adra","Aureen","Zaila","Raveena","Kezia","Ayesha","Leora","Siti","Nur","Dewi","Putri","Ayu","Rina","Sari","Sri","Wulan","Intan","Ratna","Yulia","Fitri","Indah","Rini","Eka","Dwi","Tri","Yanti","Susanti","Ika","Lilis","Nining","Titi","Yuni","Wati","Endang","Susi","Reni","Yati","Erna","Nia","Mina","Heni","Rosa","Vina","Bella","Desi","Maya","Risma","Widya","Cindy","Fani","Dian","Evi","Lina","Mila","Rara","Sifa","Tiara","Vivi","Winda","Yana","Zara"];
     const DB_L = ["Putri","Rahmawati","Lestari","Anggraini","Safitri","Prameswari","Azzahra","Amelia","Maharani","Salma","Aurell","Puteri","Ayudya","Ayu","Amara","Meisya","Pramesti","Kamila","Wulandari","Larasati","Ayunda","Amalia","Widi","Maulida","Meilani","Rahmi","Zahrani","Alodia","Atalia","Pratiwi","Kayana","Rahmadani","Dwijaya","Aprilia","Marisa","Ardelia","Nadira","Ayudia","Dwianti","Adinda","Syakira","Paramita","Kusuma","Dewi","Utami","Wijaya","Saputri","Hassanah","Susanti","Yuliana","Hidayah","Kurnia","Astuti","Handayani","Wati","Ningsih","Nuraini","Setyawati","Wibowo","Pertiwi","Kusumawardhani","Permata","Cahyani","Hapsari","Puspita","Wardani","Melati","Saraswati","Novita","Sari","Yuliani","Rahayu","Mulyani","Setiawati","Maryani","Wahyuni","Indriani","Fauziah","Ramadhani","Khasanah","Hasanah","Farida","Nurjanah","Mardiana","Sulistri","Winarsih","Sugiarti","Hartini","Kusumawati","Damayanti","Purwanti","Wahyuningrum","Setyaningsih"];
 
-    // --- UA LOGIC (MODUL 1) ---
+    // UA GEN
     function randomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-
     function generateUA() {
         const mode = document.getElementById('modeSelect').value;
         let ua = "";
@@ -265,7 +315,6 @@
         document.getElementById('statusMsg').innerText = "UA Fresh! Ready.";
         document.getElementById('statusMsg').style.color = "#00e676";
     }
-
     function copyUA() {
         const copyText = document.getElementById("resultArea");
         if(copyText.value === "") return;
@@ -275,7 +324,7 @@
         });
     }
 
-    // --- SCRIPT GENERATOR V36 LOGIC (MODUL 2) ---
+    // SCRIPT GEN
     function tog() {
         const m = document.querySelector('input[name="nMode"]:checked').value;
         document.getElementById('areaCustom').classList.toggle('hidden', m !== 'custom');
@@ -306,7 +355,7 @@
             l = rnd(DB_L, 80);
         }
 
-        // Polymorphic Var Map
+        // Polymorphic Vars
         const m = {
             CFG: randStr(5).toUpperCase(), isFB: randStr(4),
             fArr: randStr(5), lArr: randStr(5),
@@ -322,7 +371,6 @@
 
         const junk = `// HASH: ${Math.random().toString(36).substring(7)}`;
 
-        // TEMPLATE V36 LITE (Dengan Random Date Logic)
         let code = `// ==UserScript==
 // @name         ${nm} #${Math.floor(Math.random()*999)}
 // @namespace    https://viayoo.com/${randStr(8)}
