@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FB V63 GHOST GENERATOR</title>
+    <title>FB V1.0 GHOST GENERATOR</title>
     <style>
         :root { --main: #00ff88; --bg: #050505; --card: #111; --border: #333; }
         body { background: var(--bg); color: #ccc; font-family: 'Consolas', monospace; display: flex; flex-direction: column; align-items: center; padding: 20px; }
@@ -66,7 +66,7 @@
 </head>
 <body>
 
-    <h2>V63 GHOST GENERATOR 👻</h2>
+    <h2>V1.0 GHOST GENERATOR 👻</h2>
     <div class="sub">POLYMORPHIC ENGINE - AUTO UID - FRESH ID</div>
 
     <div class="box">
@@ -83,11 +83,11 @@
 
         <!-- FITUR LIST -->
         <div class="feature-box">
-            <h3>📜 FITUR SCRIPT V63:</h3>
-            <div class="feature-item"><span class="feature-icon">-</span> Auto Human Typing (Nama, Pass, Age)</div>
-            <div class="feature-item"><span class="feature-icon">-</span> Ghost UID Detector (Auto Popup)</div>
-            <div class="feature-item"><span class="feature-icon">-</span> Smart Reset Button (Auto Redirect)</div>
-            <div class="feature-item"><span class="feature-icon">-</span> Anti-Zoom / Viewport Fixer</div>
+            <h3>📜 FITUR SCRIPT V1.0:</h3>
+            <div class="feature-item"><span class="feature-icon">-</span> Auto ketik (Nama, Pass, umur)</div>
+            <div class="feature-item"><span class="feature-icon">-</span> Auto Deteksi UID</div>
+            <div class="feature-item"><span class="feature-icon">-</span> Auto Log-out ( Hapus data )</div>
+            <div class="feature-item"><span class="feature-icon">-</span> Mode Desktop Anti Zoom</div>
             <div class="feature-item"><span class="feature-icon">-</span> Polymorphic Code (Anti-Detect)</div>
         </div>
 
@@ -174,8 +174,8 @@
             let code = `// ==UserScript==
 // @name         ${nm} [${Math.floor(Math.random()*999)}]
 // @namespace    https://viayoo.com/${M.badgeId}
-// @version      63.0
-// @description  V63 Ghost UID (Auto Pop-up). Unique ID: ${junk}
+// @version      1.0
+// @description  V1.0 Ghost UID (Auto Pop-up). Unique ID: ${junk}
 // @author       by.bangdit
 // @match        *://*/*
 // @run-at       document-end
@@ -199,7 +199,7 @@
       if(!document.getElementById('${M.badgeId}')) {
           const b = document.createElement('div');
           b.id = '${M.badgeId}';
-          b.innerHTML = \`🇮🇩 V63\`;
+          b.innerHTML = \`🇮🇩 Bangdit\`;
           b.style.cssText = \`position:fixed;top:15px;right:15px;z-index:9999999;background:#008a5e;color:#fff;padding:5px 8px;border-radius:4px;font-family:sans-serif;font-weight:bold;font-size:10px;opacity:0.8;pointer-events:none;\`;
           document.body.appendChild(b);
       }
