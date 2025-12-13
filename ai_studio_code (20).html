@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB V63 GHOST GENERATOR</title>
+    <style>
+        :root { --main: #00ff88; --bg: #050505; --card: #111; --border: #333; }
+        body { background: var(--bg); color: #ccc; font-family: 'Consolas', monospace; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        
+        h2 { color: var(--main); text-shadow: 0 0 20px rgba(0,255,136,0.4); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
+        .sub { font-size: 11px; color: #666; margin-bottom: 25px; text-align: center; }
+        
+        .box { background: var(--card); border: 1px solid var(--border); padding: 25px; border-radius: 15px; width: 100%; max-width: 600px; box-shadow: 0 10px 50px rgba(0,0,0,0.7); }
+        
+        /* FEATURE LIST */
+        .feature-box { text-align: left; background: #0a0a0a; padding: 15px; border-radius: 8px; border-left: 2px solid var(--main); margin-bottom: 20px; font-size: 11px; color: #bbb; line-height: 1.6; }
+        .feature-box h3 { margin: 0 0 5px 0; color: #fff; font-size: 12px; }
+        .feature-item { display: flex; gap: 8px; }
+        .feature-icon { color: var(--main); font-weight: bold; }
+
+        .row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .col { flex: 1; }
+        
+        label { display: block; font-size: 10px; color: #888; margin-bottom: 6px; font-weight: bold; text-transform: uppercase; border-left: 3px solid var(--main); padding-left: 6px; }
+        input { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #444; color: var(--main); border-radius: 6px; box-sizing: border-box; font-family: inherit; font-size: 13px; }
+        input:focus { outline: none; border-color: var(--main); }
+
+        /* --- VIDEO / GIF AREA (PORTRAIT MODE) --- */
+        .demo-container {
+            width: 100%; 
+            max-width: 280px; /* Lebar ala HP */
+            height: 500px;    /* Tinggi ala HP */
+            background: #000; 
+            border: 2px solid #333; /* Frame HP */
+            border-radius: 12px; 
+            margin: 0 auto 20px auto; /* Posisi Tengah */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+        .demo-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+        .demo-tag { position: absolute; top: 10px; left: 10px; background: #d32f2f; color: #fff; padding: 3px 8px; font-size: 9px; border-radius: 4px; font-weight: bold; z-index: 2; }
+
+        /* CONFIG BOX */
+        .name-box { background: #0f0f0f; border: 1px dashed #444; padding: 15px; border-radius: 10px; margin-top: 15px; }
+        .radio-group { display: flex; gap: 15px; margin-bottom: 10px; border-bottom: 1px solid #222; padding-bottom: 10px; }
+        .radio-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 12px; color: #fff; }
+        input[type="radio"] { width: auto; accent-color: var(--main); }
+        
+        textarea { width: 100%; height: 100px; background: #050505; border: 1px solid #333; color: #bbb; padding: 10px; margin-bottom: 10px; box-sizing: border-box; font-size: 11px; resize: vertical; border-radius: 5px; }
+
+        button { width: 100%; padding: 14px; border: none; font-weight: bold; cursor: pointer; border-radius: 8px; margin-top: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+        .btn-gen { background: var(--main); color: #000; margin-top: 20px; }
+        .btn-gen:hover { background: #fff; box-shadow: 0 0 25px var(--main); transform: translateY(-2px); }
+        .btn-down { background: #00e5ff; color: #000; }
+        .btn-down:hover { background: #fff; box-shadow: 0 0 25px #00e5ff; }
+
+        #output { height: 150px; margin-top: 20px; font-size: 10px; color: #aaffaa; background: #080808; border: 1px solid #222; }
+        .badge-secure { background: rgba(0, 255, 136, 0.05); color: var(--main); padding: 8px; font-size: 10px; text-align: center; border-radius: 6px; margin-bottom: 20px; border: 1px solid #222; font-weight: bold; letter-spacing: 1px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <h2>V63 GHOST GENERATOR 👻</h2>
+    <div class="sub">POLYMORPHIC ENGINE - AUTO UID - FRESH ID</div>
+
+    <div class="box">
+        <div class="badge-secure">
+            🛡️ STATUS: PROTECTED (UNIQUE HASH EVERY CLICK)
+        </div>
+
+        <!-- GIF DEMO PORTRAIT -->
+        <div class="demo-container">
+            <span class="demo-tag">LIVE PREVIEW</span>
+            <!-- Pastikan link GIF nya Vertical/Portrait biar pas -->
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z6cW55eHBleG55eHBleG55eHBleG55eHBleG55eHBleCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L2qwJt2aYn19E2eXf/giphy.gif" alt="Demo Portrait">
+        </div>
+
+        <!-- FITUR LIST -->
+        <div class="feature-box">
+            <h3>📜 FITUR SCRIPT V63:</h3>
+            <div class="feature-item"><span class="feature-icon">-</span> Auto Human Typing (Nama, Pass, Age)</div>
+            <div class="feature-item"><span class="feature-icon">-</span> Ghost UID Detector (Auto Popup)</div>
+            <div class="feature-item"><span class="feature-icon">-</span> Smart Reset Button (Auto Redirect)</div>
+            <div class="feature-item"><span class="feature-icon">-</span> Anti-Zoom / Viewport Fixer</div>
+            <div class="feature-item"><span class="feature-icon">-</span> Polymorphic Code (Anti-Detect)</div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label>Nama Script</label>
+                <input type="text" id="sName" value="FB AUTO V63 GHOST">
+            </div>
+        </div>
+
+        <!-- CONFIG NAMA -->
+        <div class="name-box">
+            <label style="border:none; padding:0; margin-bottom:10px; color:#fff;">DATABASE NAMA</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="nMode" value="auto" checked onchange="tog()"> Mode Auto (Random Gen Z)</label>
+                <label class="radio-label"><input type="radio" name="nMode" value="custom" onchange="tog()"> Mode Custom (Manual)</label>
+            </div>
+            
+            <div id="infoAuto" style="font-size:11px; color:#888; border-left:2px solid #00ff88; padding-left:10px;">
+                ✅ <b>Fresh Identity:</b> Generator otomatis mengambil kombinasi <b>80 Nama Acak</b> dari database internal setiap kali generate. Tidak akan ada script dengan database nama yang sama persis.
+            </div>
+
+            <div id="areaCustom" class="hidden">
+                <label>LIST NAMA DEPAN</label>
+                <textarea id="listF" placeholder="Paste nama depan..."></textarea>
+                
+                <label>LIST NAMA BELAKANG</label>
+                <textarea id="listL" placeholder="Paste nama belakang..."></textarea>
+            </div>
+        </div>
+
+        <button class="btn-gen" onclick="generate()">⚡ GENERATE NEW SCRIPT</button>
+        
+        <textarea id="output" placeholder="Kode unik akan muncul di sini..."></textarea>
+        
+        <div class="row" style="margin-top:10px;">
+            <div class="col"><button class="btn-down" onclick="downloadFile()">💾 DOWNLOAD .JS</button></div>
+            <div class="col"><button style="background:#333; color:#fff;" onclick="copy()">📋 COPY TEXT</button></div>
+        </div>
+    </div>
+
+    <script>
+        const MASTER_F = ["Adeline","Adhisty","Agha","Aileen","Airin","Alesha","Alika","Amara","Amel","Anindya","Anya","Aqila","Arumi","Ashilla","Aulia","Aurel","Aurora","Azura","Beby","Belinda","Bellona","Bianca","Billa","Brisia","Caca","Calista","Cantika","Carissa","Celine","Chika","Cia","Cindy","Clairine","Clarissa","Cut","Davina","Dea","Dhea","Dinda","Diva","Eca","Elina","Elsa","Elvina","Enzy","Ersya","Fani","Fatin","Febby","Felicia","Felly","Fia","Friska","Fuji","Gabriella","Ghea","Gisella","Glenca","Gracia","Hanggini","Hesti","Ify","Ilona","Indah","Intan","Iren","Jasmine","Jeha","Jelita","Jessica","Jihan","Jovita","Kalista","Kayla","Keisya","Kesha","Keyra","Khanza","Kiky","Kirana","Laras","Lesti","Leticia","Livy","Luna","Lyodra","Mahalini","Manda","Marsha","Maudy","Meisya","Michelle","Mikha","Nadin","Nadhira","Naura","Nayla","Naysila","Nesya","Niken","Ochi","Olivia","Prilly","Pevita","Queen","Queena","Rachel","Raisa","Ranty","Rara","Ratu","Regina","Rere","Ririe","Salma","Salwa","Sasa","Shakeela","Shaloom","Shanju","Sherly","Shireen","Steffi","Syifa","Syahnaz","Tania","Tasya","Thalia","Tiara","Tissa","Ussy","Valerie","Vanessa","Vanya","Vella","Velove","Vanesha","Vivi","Wilona","Wulan","Xaviera","Yoriko","Yola","Yolanda","Yuki","Yurika","Zahra","Zara","Zaskia","Zea","Zee","Ziva","Zivanna"];
+        const MASTER_L = ["Adisty","Agatha","Amanda","Amelia","Anastasia","Andriani","Angelista","Anggraini","Anwar","Aprilia","Ardelia","Aurelia","Ayunda","Azzahra","Basri","Cahyani","Chairunisa","Clarista","Damayanti","Darmawan","Dewanti","Diandra","Evelyn","Fadilah","Febriani","Gabriella","Gunawan","Handayani","Hapsari","Hermawan","Hidayah","Irawan","Iskandar","Jayanti","Kamila","Khairunnisa","Kusuma","Larasati","Lestari","Lubis","Magdalena","Maharani","Maheswari","Margaretha","Maulida","Melati","Natalia","Nasution","Novitasari","Nugraha","Octavia","Olivia","Panggabean","Permata","Prameswari","Pranata","Pratama","Pratiwi","Puspita","Putri","Rachmawati","Rahmadani","Ramadhani","Rosdiana","Safitri","Salsabila","Santoso","Saputri","Saraswati","Setiawan","Setyawati","Sihombing","Simanjuntak","Siregar","Sucipto","Susanti","Syahputri","Tania","Tanjung","Utami","Utomo","Veronica","Wardani","Wibowo","Wijaya","Winata","Wulandari","Yuliana","Yulianti","Zahra","Zefanya","Zulkarnain"];
+
+        function tog() {
+            const m = document.querySelector('input[name="nMode"]:checked').value;
+            document.getElementById('areaCustom').classList.toggle('hidden', m !== 'custom');
+            document.getElementById('infoAuto').classList.toggle('hidden', m === 'custom');
+        }
+        function rnd(arr, n) { return arr.sort(() => 0.5 - Math.random()).slice(0, n); }
+        function randVar(len) { let s='_'; const c='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; for(let i=0;i<len;i++) s+=c.charAt(Math.floor(Math.random()*c.length)); return s; }
+        function parse(t) { return t ? t.split(/[\n,]/).map(x=>x.trim()).filter(x=>x.length) : []; }
+
+        function downloadFile() {
+            const content = document.getElementById('output').value;
+            if(!content) { alert("Generate dulu bro!"); return; }
+            const randomID = Math.floor(Math.random() * 99999);
+            const filename = `FB_V63_Ghost_${randomID}.user.js`;
+            const blob = new Blob([content], {type: 'text/javascript'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a'); link.href = url; link.download = filename;
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        }
+
+        function generate() {
+            const nm = document.getElementById('sName').value;
+            const md = document.querySelector('input[name="nMode"]:checked').value;
+            let rawF, rawL;
+            if(md === 'custom') {
+                rawF = document.getElementById('listF').value.replace(/`/g, '');
+                rawL = document.getElementById('listL').value.replace(/`/g, '');
+                if(!rawF || !rawL) { alert("Isi database nama manualnya!"); return; }
+            } else {
+                const fArr = rnd(MASTER_F, 80); const lArr = rnd(MASTER_L, 80);
+                rawF = fArr.join(', '); rawL = lArr.join(', ');
+            }
+
+            const M = {
+                rawF: randVar(5), rawL: randVar(5), proc: randVar(6), fArr: randVar(4), lArr: randVar(4), isFB: randVar(5), initUI: randVar(7), checkUID: randVar(6), wipe: randVar(5), sleep: randVar(4), delay: randVar(5), type: randVar(6), runName: randVar(6), runAge: randVar(6), runPass: randVar(6), fixV: randVar(5), badgeId: 'bg-'+Math.random().toString(36).substring(7), resetId: 'rst-'+Math.random().toString(36).substring(7), uidId: 'uid-'+Math.random().toString(36).substring(7)
+            };
+            const junk = `// FRESH HASH: ${Math.random().toString(36).substring(2, 15).toUpperCase()}`;
+
+            let code = `// ==UserScript==
+// @name         ${nm} [${Math.floor(Math.random()*999)}]
+// @namespace    https://viayoo.com/${M.badgeId}
+// @version      63.0
+// @description  V63 Ghost UID (Auto Pop-up). Unique ID: ${junk}
+// @author       by.bangdit
+// @match        *://*/*
+// @run-at       document-end
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  'use strict';
+  ${junk}
+
+  const CONFIG = { pass: "tasik321" };
+  const ${M.rawF} = \`${rawF}\`;
+  const ${M.rawL} = \`${rawL}\`;
+
+  const ${M.proc} = (t) => t.split(/[\\n,]+/).map(n => n.trim()).filter(n => n.length > 1);
+  const ${M.fArr} = ${M.proc}(${M.rawF});
+  const ${M.lArr} = ${M.proc}(${M.rawL});
+  const ${M.isFB} = window.location.hostname.includes('facebook') || window.location.hostname.includes('fb.com');
+
+  function ${M.initUI}() {
+      if(!document.getElementById('${M.badgeId}')) {
+          const b = document.createElement('div');
+          b.id = '${M.badgeId}';
+          b.innerHTML = \`🇮🇩 V63\`;
+          b.style.cssText = \`position:fixed;top:15px;right:15px;z-index:9999999;background:#008a5e;color:#fff;padding:5px 8px;border-radius:4px;font-family:sans-serif;font-weight:bold;font-size:10px;opacity:0.8;pointer-events:none;\`;
+          document.body.appendChild(b);
+      }
+      if(!document.getElementById('${M.resetId}')) {
+          const btn = document.createElement('div');
+          btn.id = '${M.resetId}';
+          btn.innerHTML = \`🗑️ RESET\`;
+          btn.style.cssText = \`position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999999;background:#d32f2f;color:#fff;padding:10px 25px;border-radius:30px;font-family:sans-serif;font-weight:bold;font-size:12px;box-shadow:0 4px 10px rgba(0,0,0,0.3);cursor:pointer;border:2px solid #fff;transition:opacity 0.3s;\`;
+          btn.onclick = () => { if(confirm("Reset Data?")) ${M.wipe}(); };
+          document.body.appendChild(btn);
+          
+          document.addEventListener('focusin', (e) => {
+              if(['INPUT', 'SELECT', 'TEXTAREA'].includes(e.target.tagName)) btn.style.display = 'none';
+          });
+          document.addEventListener('focusout', () => {
+              setTimeout(() => { btn.style.display = 'block'; }, 300);
+          });
+      }
+  }
+
+  function ${M.checkUID}() {
+      const m = document.cookie.match(/c_user=([0-9]+)/);
+      if (m && m[1]) {
+          const id = m[1];
+          let box = document.getElementById('${M.uidId}');
+          if (!box) {
+              box = document.createElement('div');
+              box.id = '${M.uidId}';
+              box.style.cssText = \`position:fixed;top:15px;left:50%;transform:translateX(-50%);z-index:9999999;background:#00ff88;color:#000;padding:8px 15px;border-radius:20px;font-family:monospace;font-weight:bold;font-size:13px;border:2px solid #fff;box-shadow:0 0 15px rgba(0,255,136,0.5);cursor:pointer;white-space:nowrap;animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);\`;
+              const st = document.createElement('style');
+              st.innerHTML = \`@keyframes popIn { from { transform: translateX(-50%) scale(0); } to { transform: translateX(-50%) scale(1); } }\`;
+              document.head.appendChild(st);
+              document.body.appendChild(box);
+          }
+          if (!box.innerText.includes(id)) {
+              box.innerHTML = \`✅ \${id} (SALIN)\`;
+              box.onclick = () => {
+                  const t = document.createElement("textarea"); t.value = id; document.body.appendChild(t);
+                  t.select(); document.execCommand('copy'); t.remove();
+                  const ori = box.innerHTML;
+                  box.innerHTML = "📋 TERSALIN!"; box.style.background = "#fff";
+                  setTimeout(() => { box.innerHTML = ori; box.style.background = "#00ff88"; }, 1000);
+              };
+          }
+      }
+  }
+
+  function ${M.wipe}() {
+      const c = document.cookie.split(";");
+      for (let i = 0; i < c.length; i++) {
+          const e = c[i].indexOf("=");
+          const n = e > -1 ? c[i].substr(0, e) : c[i];
+          document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=.facebook.com";
+          document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+      }
+      localStorage.clear(); sessionStorage.clear();
+      window.location.href = "https://m.facebook.com/reg/";
+  }
+
+  const ${M.sleep} = (ms) => new Promise(r => setTimeout(r, ms));
+  const ${M.delay} = () => Math.floor(Math.random() * (40 - 10 + 1) + 10); 
+
+  async function ${M.type}(el, text) {
+      if(!el || el.getAttribute('data-filled') === 'true') return;
+      el.setAttribute('data-filled', 'true');
+      el.focus();
+      if(el.getAttribute('inputmode') === 'numeric') el.click();
+      el.value = ""; 
+      let str = "";
+      for (let i = 0; i < text.length; i++) {
+          await ${M.sleep}(${M.delay}());
+          str += text[i];
+          const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+          if (s) s.call(el, str); else el.value = str;
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+      el.dispatchEvent(new Event('blur', { bubbles: true }));
+  }
+
+  function ${M.runName}() {
+      const inps = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => {
+          return el.offsetParent !== null && !el.disabled && !el.readOnly;
+      });
+      const tg = inps.filter(el => {
+          const a = (el.name + el.id + el.className).toLowerCase();
+          const num = el.getAttribute('inputmode') === 'numeric';
+          return !a.includes('search') && !a.includes('email') && !num;
+      });
+      if (tg.length >= 2) {
+          if (!tg[0].value && tg[0].getAttribute('data-filled') !== 'true') {
+              const F = ${M.fArr}[Math.floor(Math.random() * ${M.fArr}.length)];
+              const L = ${M.lArr}[Math.floor(Math.random() * ${M.lArr}.length)];
+              ${M.type}(tg[0], F);
+              setTimeout(() => ${M.type}(tg[1], L), 300);
+          }
+      }
+  }
+
+  function ${M.runAge}() {
+      const num = document.querySelector('input[inputmode="numeric"]');
+      const txt = document.body.innerText.toLowerCase();
+      if ((txt.includes("usia") || txt.includes("umur") || txt.includes("age")) && num && !num.value && num.getAttribute('data-filled') !== 'true') {
+          const a = String(Math.floor(Math.random() * (25 - 19 + 1) + 19));
+          ${M.type}(num, a);
+          return;
+      }
+      const dt = document.querySelector('input[type="date"]');
+      if (dt && !dt.value) {
+          const d = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
+          const m = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+          const y = Math.floor(Math.random() * (2003 - 1997 + 1)) + 1997;
+          dt.focus();
+          const s = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+          s.call(dt, \`\${y}-\${m}-\${d}\`);
+          dt.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+  }
+
+  function ${M.runPass}() {
+      document.querySelectorAll('input[type="password"]').forEach(el => {
+          if (!el.value && el.getAttribute('data-filled') !== 'true') {
+              ${M.type}(el, CONFIG.pass); el.style.border = "2px solid #00ff88"; 
+          }
+      });
+  }
+
+  function ${M.fixV}() {
+      let m = document.querySelector('meta[name="viewport"]');
+      if (!m) { m = document.createElement('meta'); m.name='viewport'; document.head.appendChild(m); }
+      m.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0';
+      if(!document.getElementById('bangdit-fix')) {
+          const s = document.createElement('style'); s.id='bangdit-fix';
+          s.innerHTML = \`html,body{max-width:100vw!important;overflow-x:hidden!important}input,select,textarea{font-size:16px!important}#reg_box,.registration_container,._58mv{width:100%!important;margin:0!important}\`;
+          document.head.appendChild(s);
+      }
+  }
+
+  if(${M.isFB}) {
+      setInterval(() => {
+          ${M.fixV}(); ${M.initUI}(); ${M.checkUID}(); 
+          ${M.runName}(); ${M.runAge}(); ${M.runPass}();
+      }, 1000);
+  }
+})();`;
+
+            document.getElementById('output').value = code;
+        }
+
+        function copy() {
+            const t = document.getElementById('output');
+            t.select(); document.execCommand('copy');
+            alert('SCRIPT BERHASIL DISALIN!');
+        }
+    </script>
+</body>
+</html>
